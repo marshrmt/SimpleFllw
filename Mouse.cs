@@ -5,7 +5,7 @@ using System.Threading;
 using ExileCore.Shared;
 using SharpDX;
 
-namespace Alpha
+namespace SimpleFllw
     { 
     public class Mouse
     {

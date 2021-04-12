@@ -4,9 +4,9 @@ using ExileCore.Shared.Interfaces;
 using ExileCore.Shared.Nodes;
 using System.IO;
 
-namespace Alpha
+namespace SimpleFllw
 {
-	class AlphaSettings : ISettings
+	class SimpleFllwSettings : ISettings
 	{
 		public ToggleNode Enable { get; set; } = new ToggleNode(false);
 		public ToggleNode IsFollowEnabled { get; set; } = new ToggleNode(false);

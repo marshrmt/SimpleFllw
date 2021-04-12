@@ -15,7 +15,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing;
 
-namespace Alpha
+namespace SimpleFllw
 {
 	/// <summary>
 	/// All work is shamelessly leached and cobbled together. 
@@ -24,7 +24,7 @@ namespace Alpha
 	///		Pathfinding: juhgiyo
 	///	I'm just linking things together and doing silly experiments. 
 	/// </summary>
-	internal class AlphaCore : BaseSettingsPlugin<AlphaSettings>
+	internal class SimpleFllwCore : BaseSettingsPlugin<SimpleFllwSettings>
 	{
 		private Random random = new Random();
 		private Camera Camera => GameController.Game.IngameState.Camera;		
@@ -42,9 +42,9 @@ namespace Alpha
 
 		private int _numRows, _numCols;
 		private byte[,] _tiles;
-		public AlphaCore()
+		public SimpleFllwCore()
 		{
-			Name = "Alpha";
+			Name = "SimpleFllw";
 		}
 
 		public override bool Initialise()
