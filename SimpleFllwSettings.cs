@@ -20,6 +20,7 @@ namespace SimpleFllw
 		[Menu("Movement Key")] public HotkeyNode MovementKey { get; set; } = Keys.T;
 		[Menu("Allow Dash")] public ToggleNode IsDashEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Dash Key")] public HotkeyNode DashKey { get; set; } = Keys.W;
+		[Menu("Loot Key")] public HotkeyNode LootKey { get; set; } = Keys.F;
 		[Menu("Follow Close")] public ToggleNode IsCloseFollowEnabled { get; set; } = new ToggleNode(false);
 
 	}

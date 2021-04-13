@@ -198,6 +198,11 @@ namespace SimpleFllw
 					_tasks.Add(new TaskNode(transOptions[random.Next(transOptions.Length)].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
 			}
 
+			//Don't run tasks if looting
+			if (Input.GetKeyState(Settings.LootKey))
+			{
+				return null;
+			}
 
 			//We have our tasks, now we need to perform in game logic with them.
 			if (DateTime.Now > _nextBotAction && _tasks.Count > 0)
