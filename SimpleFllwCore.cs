@@ -446,8 +446,15 @@ namespace SimpleFllw
 			float y1 = y - yOffset - height / 2;
 			float y2 = y + yOffset - height / 2;
 
-			Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 15);
-			Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 15);
+			if (Settings.IsDrawFollowMarkerEnabled)
+			{
+				Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 15);
+			}
+
+			if (Settings.IsDrawKeyMarkerEnabled) 
+			{
+				Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 15);
+			}
 		}
 
 

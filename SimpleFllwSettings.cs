@@ -18,10 +18,11 @@ namespace SimpleFllw
 		[Menu("Follow Offset Normal")] public RangeNode<int> FollowOffsetNormal { get; set; } = new RangeNode<int>(60, -150, 150);
 		[Menu("Follow Target Name")] public TextNode LeaderName { get; set; } = new TextNode("");
 		[Menu("Movement Key")] public HotkeyNode MovementKey { get; set; } = Keys.T;
-		[Menu("Allow Dash")] public ToggleNode IsDashEnabled { get; set; } = new ToggleNode(true);
+		[Menu("Allow Dash")] public ToggleNode IsDashEnabled { get; set; } = new ToggleNode(false);
 		[Menu("Dash Key")] public HotkeyNode DashKey { get; set; } = Keys.W;
 		[Menu("Loot Key")] public HotkeyNode LootKey { get; set; } = Keys.F;
-		[Menu("Follow Close")] public ToggleNode IsCloseFollowEnabled { get; set; } = new ToggleNode(false);
-
+		[Menu("Follow Close")] public ToggleNode IsCloseFollowEnabled { get; set; } = new ToggleNode(true);
+		[Menu("Draw Follow Marker")] public ToggleNode IsDrawFollowMarkerEnabled { get; set; } = new ToggleNode(true);
+		[Menu("Draw Move Key Marker")] public ToggleNode IsDrawKeyMarkerEnabled { get; set; } = new ToggleNode(false);
 	}
 }
