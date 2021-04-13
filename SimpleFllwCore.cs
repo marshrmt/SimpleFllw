@@ -314,7 +314,12 @@ namespace SimpleFllw
 			}
 			else
 			{
-				//Input.KeyUp(Settings.MovementKey);
+				var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
+
+				if (recheckDistance <= Settings.PathfindingNodeDistance.Value)
+				{
+					Input.KeyUp(Settings.MovementKey);
+				}
 			}
 
 			_lastPlayerPosition = GameController.Player.Pos;
