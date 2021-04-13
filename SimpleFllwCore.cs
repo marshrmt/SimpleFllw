@@ -225,9 +225,6 @@ namespace SimpleFllw
 					case TaskNodeType.Movement:
 						_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency + random.Next(Settings.BotInputFrequency));
 
-						/*if (Settings.IsDashEnabled && CheckDashTerrain(currentTask.WorldPosition.WorldToGrid()))
-							return null;*/
-
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(currentTask.WorldPosition));
 						Thread.Sleep(random.Next(25) + 30);
 						Input.KeyDown(Settings.MovementKey);
@@ -392,21 +389,24 @@ namespace SimpleFllw
 
 		public override void Render()
 		{
-			Color followColor = Color.FromRgba(0xFF0000AA);
-			Color keyColor = Color.FromRgba(0xFF0000AA);
-
 			if (Settings.IsFollowEnabled.Value) 
 			{
-				followColor = Color.FromRgba(0x00FF00AA);
+				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xFF0000AA), 64);
+			}
+			else
+			{
+				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0x10FF00AA), 64);
 			}
 
 			if (Input.GetKeyState(Settings.MovementKey))
 			{
-				keyColor = Color.FromRgba(0x00FF00AA);
+				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0x10FF00AA), 256);
+			}
+			else
+			{
+				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xFF0000AA), 256);
 			}
 
-			Graphics.DrawText($"FLLW", new Vector2(500, 120), followColor, 64);
-			Graphics.DrawText($"KEY", new Vector2(500, 420), keyColor, 64);
 		}
 
 
