@@ -225,11 +225,17 @@ namespace SimpleFllw
 					case TaskNodeType.Movement:
 						_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency + random.Next(Settings.BotInputFrequency));
 
-						Vector3 direction = GameController.Player.Pos - currentTask.WorldPosition;
-						direction.Normalize();
-						direction *= 100;
+						Vector3 direction;
+						Vector3 normal;
 
-						Vector3 corrected = currentTask.WorldPosition - direction;
+						// Slot 1
+						direction = GameController.Player.Pos - currentTask.WorldPosition;
+						direction.Normalize();
+						normal = new Vector3(direction.Y, -direction.X, direction.Z);
+						direction *= 100;
+						normal *= 100;
+
+						Vector3 corrected = currentTask.WorldPosition + direction + normal;
 
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(corrected));
 						Thread.Sleep(random.Next(25) + 30);
