@@ -391,22 +391,21 @@ namespace SimpleFllw
 		{
 			if (Settings.IsFollowEnabled.Value) 
 			{
-				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xFF0000AA), 64);
+				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA0000FF), 64);
 			}
 			else
 			{
-				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0x10FF00AA), 64);
+				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA00FF00), 64);
 			}
 
 			if (Input.GetKeyState(Settings.MovementKey))
 			{
-				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0x10FF00AA), 256);
+				Graphics.DrawText($"KEY", new System.Numerics.Vector2(500, 420), Color.FromRgba(0xAA0000FF), 128, "Arial", ExileCore.Shared.Enums.FontAlign.Left);
 			}
 			else
 			{
-				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xFF0000AA), 256);
+				Graphics.DrawText($"KEY", new System.Numerics.Vector2(500, 420), Color.FromRgba(0xAA00FF00), 128, "Arial", ExileCore.Shared.Enums.FontAlign.Left);
 			}
-
 		}
 
 
