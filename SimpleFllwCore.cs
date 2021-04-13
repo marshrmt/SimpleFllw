@@ -227,9 +227,10 @@ namespace SimpleFllw
 
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(currentTask.WorldPosition));
 						Thread.Sleep(random.Next(25) + 30);
-						Input.KeyDown(Settings.MovementKey);
-						Thread.Sleep(random.Next(25) + 30);
-						Input.KeyUp(Settings.MovementKey);
+						if (!Input.GetKeyState(Settings.MovementKey))
+						{
+							Input.KeyDown(Settings.MovementKey);
+						}
 
 						//Within bounding range. Task is complete
 						//Note: Was getting stuck on close objects... testing hacky fix.
@@ -254,6 +255,9 @@ namespace SimpleFllw
 								MouseoverItem(questLoot);
 							if (targetInfo.isTargeted)
 							{
+								Input.KeyUp(Settings.MovementKey);
+								Thread.Sleep(25);
+								Mouse.LeftMouseUp();
 								Thread.Sleep(25);
 								Mouse.LeftMouseDown();
 								Thread.Sleep(25 + random.Next(Settings.BotInputFrequency));
@@ -277,6 +281,8 @@ namespace SimpleFllw
 							else
 							{
 								//Walk towards the transition
+								Input.KeyUp(Settings.MovementKey);
+								Thread.Sleep(random.Next(25) + 30);
 								Mouse.SetCursorPosHuman2(screenPos);
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyDown(Settings.MovementKey);
@@ -306,6 +312,11 @@ namespace SimpleFllw
 						}
 				}
 			}
+			else
+			{
+				Input.KeyUp(Settings.MovementKey);
+			}
+
 			_lastPlayerPosition = GameController.Player.Pos;
 			return null;
 		}
