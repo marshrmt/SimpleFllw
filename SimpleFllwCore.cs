@@ -405,12 +405,14 @@ namespace SimpleFllw
 			var windowRect = GameController.Window.GetWindowRectangle();
 			float width = 200;
 			float height = 100;
-			float x = windowRect.Center.X - windowRect.Right / 4 - width / 2;
-			float y1 = windowRect.Center.Y - windowRect.Bottom / 4 - height / 2;
-			float y2 = windowRect.Center.Y + windowRect.Bottom / 4 - height / 2;
+			float x = windowRect.Center.X - width / 2;
+			float y1 = windowRect.Center.Y - windowRect.BottomRight.Y / 4 - height / 2;
+			float y2 = windowRect.Center.Y + windowRect.BottomRight.Y / 4 - height / 2;
 
-			Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 0.8f);
-			Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 0.8f);
+			LogMessage($"windowrect.center.y : {windowRect.Center.Y}, windowrect.bottomright.y: {windowRect.BottomRight.Y}");
+
+			Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 15);
+			Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 15);
 		}
 
 
