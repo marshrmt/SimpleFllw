@@ -328,7 +328,7 @@ namespace SimpleFllw
 			{
 				var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 
-				if (recheckDistance <= Settings.PathfindingNodeDistance.Value * 1.5)
+				if (recheckDistance <= Settings.PathfindingNodeDistance.Value)
 				{
 					Input.KeyUp(Settings.MovementKey);
 				}
