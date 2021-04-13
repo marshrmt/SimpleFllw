@@ -228,12 +228,12 @@ namespace SimpleFllw
 						Vector3 direction;
 						Vector3 normal;
 
-						// Slot 1
+						// Follow offsets
 						direction = GameController.Player.Pos - currentTask.WorldPosition;
 						direction.Normalize();
-						normal = new Vector3(direction.Y, -direction.X, direction.Z);
-						direction *= 120;
-						normal *= 50;
+						normal = new Vector3(-direction.Y, direction.X, direction.Z);
+						direction *= Settings.FollowOffsetDirection;
+						normal *= Settings.FollowOffsetNormal;
 
 						Vector3 corrected = currentTask.WorldPosition + direction + normal;
 
