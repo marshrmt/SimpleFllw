@@ -201,6 +201,7 @@ namespace SimpleFllw
 			//Don't run tasks if looting
 			if (Input.GetKeyState(Settings.LootKey))
 			{
+				Input.KeyUp(Settings.MovementKey);
 				return null;
 			}
 
