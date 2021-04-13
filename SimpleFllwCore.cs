@@ -389,7 +389,7 @@ namespace SimpleFllw
 
 		public override void Render()
 		{
-			if (Settings.IsFollowEnabled.Value) 
+			if (!Settings.IsFollowEnabled.Value) 
 			{
 				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA0000FF), 64);
 			}
@@ -398,13 +398,13 @@ namespace SimpleFllw
 				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA00FF00), 64);
 			}
 
-			if (Input.GetKeyState(Settings.MovementKey))
+			if (!Input.GetKeyState(Settings.MovementKey))
 			{
-				Graphics.DrawText($"KEY", new System.Numerics.Vector2(500, 420), Color.FromRgba(0xAA0000FF), 128, "Arial", ExileCore.Shared.Enums.FontAlign.Left);
+				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xAA0000FF), 512, ExileCore.Shared.Enums.FontAlign.Left);
 			}
 			else
 			{
-				Graphics.DrawText($"KEY", new System.Numerics.Vector2(500, 420), Color.FromRgba(0xAA00FF00), 128, "Arial", ExileCore.Shared.Enums.FontAlign.Left);
+				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xAA00FF00), 512, ExileCore.Shared.Enums.FontAlign.Left);
 			}
 		}
 
