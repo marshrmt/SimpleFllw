@@ -314,7 +314,7 @@ namespace SimpleFllw
 			}
 			else
 			{
-				Input.KeyUp(Settings.MovementKey);
+				//Input.KeyUp(Settings.MovementKey);
 			}
 
 			_lastPlayerPosition = GameController.Player.Pos;
