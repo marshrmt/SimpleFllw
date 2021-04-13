@@ -389,23 +389,28 @@ namespace SimpleFllw
 
 		public override void Render()
 		{
-			if (!Settings.IsFollowEnabled.Value) 
+			Color followColor = Color.FromRgba(0xAA0000FF);
+			Color keyColor = Color.FromRgba(0xAA0000FF);
+
+			if (Settings.IsFollowEnabled.Value) 
 			{
-				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA0000FF), 64);
-			}
-			else
-			{
-				Graphics.DrawText($"FLLW", new Vector2(500, 120), Color.FromRgba(0xAA00FF00), 64);
+				followColor = Color.FromRgba(0xAA00FF00);
 			}
 
-			if (!Input.GetKeyState(Settings.MovementKey))
+			if (Input.GetKeyState(Settings.MovementKey))
 			{
-				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xAA0000FF), 512, ExileCore.Shared.Enums.FontAlign.Left);
+				keyColor = Color.FromRgba(0xAA00FF00);
 			}
-			else
-			{
-				Graphics.DrawText($"KEY", new Vector2(500, 420), Color.FromRgba(0xAA00FF00), 512, ExileCore.Shared.Enums.FontAlign.Left);
-			}
+
+			var windowRect = GameController.Window.GetWindowRectangle();
+			float width = 200;
+			float height = 100;
+			float x = windowRect.Center.X - windowRect.Right / 4 - width / 2;
+			float y1 = windowRect.Center.Y - windowRect.Bottom / 4 - height / 2;
+			float y2 = windowRect.Center.Y + windowRect.Bottom / 4 - height / 2;
+
+			Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 0.8f);
+			Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 0.8f);
 		}
 
 
