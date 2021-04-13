@@ -227,7 +227,7 @@ namespace SimpleFllw
 
 						Vector3 direction = GameController.Player.Pos - currentTask.WorldPosition;
 						direction.Normalize();
-						direction *= 20;
+						direction *= 100;
 
 						Vector3 corrected = currentTask.WorldPosition - direction;
 
