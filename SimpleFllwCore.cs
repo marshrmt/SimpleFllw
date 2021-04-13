@@ -389,27 +389,28 @@ namespace SimpleFllw
 
 		public override void Render()
 		{
-			Color followColor = Color.FromRgba(0xAA0000FF);
-			Color keyColor = Color.FromRgba(0xAA0000FF);
+			Color followColor = Color.FromRgba(0x880000FF);
+			Color keyColor = Color.FromRgba(0x880000FF);
 
 			if (Settings.IsFollowEnabled.Value) 
 			{
-				followColor = Color.FromRgba(0xAA00FF00);
+				followColor = Color.FromRgba(0x8800FF00);
 			}
 
 			if (Input.GetKeyState(Settings.MovementKey))
 			{
-				keyColor = Color.FromRgba(0xAA00FF00);
+				keyColor = Color.FromRgba(0x8800FF00);
 			}
 
 			var windowRect = GameController.Window.GetWindowRectangle();
 			float width = 200;
 			float height = 100;
-			float x = windowRect.Center.X - width / 2;
-			float y1 = windowRect.Center.Y - windowRect.BottomRight.Y / 4 - height / 2;
-			float y2 = windowRect.Center.Y + windowRect.BottomRight.Y / 4 - height / 2;
-
-			LogMessage($"windowrect.center.y : {windowRect.Center.Y}, windowrect.bottomright.y: {windowRect.BottomRight.Y}");
+			
+			float x = windowRect.Center.X - windowRect.Left - width / 2;
+			float y = windowRect.Center.Y - windowRect.Top;
+			float yOffset = (windowRect.Bottom - windowRect.Top) / 4;
+			float y1 = y - yOffset - height / 2;
+			float y2 = y + yOffset - height / 2;
 
 			Graphics.DrawBox(new RectangleF(x, y1, width, height), followColor, 15);
 			Graphics.DrawBox(new RectangleF(x, y2, width, height), keyColor, 15);
