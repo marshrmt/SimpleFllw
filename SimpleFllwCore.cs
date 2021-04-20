@@ -300,7 +300,7 @@ namespace SimpleFllw
 								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
-								Thread.Sleep(random.Next(25) + 600);
+								Thread.Sleep(random.Next(25) + 400);
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
@@ -435,17 +435,17 @@ namespace SimpleFllw
 
 		public override void Render()
 		{
-			Color followColor = Color.FromRgba(0x880000FF);
-			Color keyColor = Color.FromRgba(0x880000FF);
+			Color followColor = Color.FromRgba(0x440000FF);
+			Color keyColor = Color.FromRgba(0x440000FF);
 
 			if (Settings.IsFollowEnabled.Value) 
 			{
-				followColor = Color.FromRgba(0x8800FF00);
+				followColor = Color.FromRgba(0x4400FF00);
 			}
 
 			if (Input.GetKeyState(Settings.MovementKey))
 			{
-				keyColor = Color.FromRgba(0x8800FF00);
+				keyColor = Color.FromRgba(0x4400FF00);
 			}
 
 			var windowRect = GameController.Window.GetWindowRectangle();
