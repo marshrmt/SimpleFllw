@@ -105,7 +105,10 @@ namespace SimpleFllw
 
 			//Dont run logic if we're dead!
 			if (!GameController.Player.IsAlive)
+			{
+				Input.KeyUp(Settings.MovementKey);
 				return null;
+			}
 
 			if (Settings.ToggleFollower.PressedOnce())
 			{
@@ -114,7 +117,10 @@ namespace SimpleFllw
 			}
 
 			if (!Settings.IsFollowEnabled.Value)
+			{
+				Input.KeyUp(Settings.MovementKey);
 				return null;
+			}
 
 
 			//Cache the current follow target (if present)
@@ -291,6 +297,11 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
+								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
+								Input.KeyUp(Settings.MovementKey);
+								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
+								Thread.Sleep(random.Next(250) + 30);
+
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
@@ -308,8 +319,9 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 3)
+							if (currentTask.AttemptCount > 10)
 								_tasks.RemoveAt(0);
+								Input.KeyUp(Settings.MovementKey);
 							break;
 						}
 
