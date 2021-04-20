@@ -300,7 +300,7 @@ namespace SimpleFllw
 								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
-								Thread.Sleep(random.Next(25) + 400);
+								Thread.Sleep(random.Next(25) + 600);
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
