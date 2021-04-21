@@ -312,7 +312,7 @@ namespace SimpleFllw
 							//if (taskDistance <= Settings.ClearPathDistance.Value)
 							//{
 
-								if (currentTask.AttemptCount > 2)
+								if (currentTask.AttemptCount == 3)
 								{
 									Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 									backDirection.Normalize();
