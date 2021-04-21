@@ -318,7 +318,7 @@ namespace SimpleFllw
 									backDirection.Normalize();
 									backDirection *= 120;
 
-									//_lastTargetPosition = currentTask.WorldPosition + backDirection;
+									_lastTargetPosition = currentTask.WorldPosition + backDirection;
 									/* var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
