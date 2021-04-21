@@ -169,12 +169,12 @@ namespace SimpleFllw
 
 					//Check if we should add quest loot logic. We're close to leader already
 					var questLoot = GetLootableQuestItem();
-					if (questLoot != null &&
+					if (Settings.IsLootQuestItemsEnabled && questLoot != null &&
 						Vector3.Distance(GameController.Player.Pos, questLoot.Pos) < Settings.ClearPathDistance.Value &&
 						_tasks.FirstOrDefault(I => I.Type == TaskNodeType.Loot) == null)
 						_tasks.Add(new TaskNode(questLoot.Pos, Settings.ClearPathDistance, TaskNodeType.Loot));
 
-					else if (!_hasUsedWP)
+					else if (Settings.IsAutoPickUpWaypointEnabled && !_hasUsedWP)
 					{
 						//Check if there's a waypoint nearby
 						var waypoint = GameController.EntityListWrapper.Entities.SingleOrDefault(I => I.Type == ExileCore.Shared.Enums.EntityType.Waypoint &&
@@ -320,8 +320,10 @@ namespace SimpleFllw
 							}
 							currentTask.AttemptCount++;
 							if (currentTask.AttemptCount > 10)
+							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
+							}
 							break;
 						}
 
@@ -330,14 +332,23 @@ namespace SimpleFllw
 							if (Vector3.Distance(GameController.Player.Pos, currentTask.WorldPosition) > 150)
 							{
 								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
+
+								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
+								Input.KeyUp(Settings.MovementKey);
+								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
+								Thread.Sleep(random.Next(25) + 200);
+
 								Input.KeyUp(Settings.MovementKey);
 								Thread.Sleep(Settings.BotInputFrequency);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
 								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 3)
+							if (currentTask.AttemptCount > 7)
+							{
 								_tasks.RemoveAt(0);
+								Input.KeyUp(Settings.MovementKey);
+							}
 							break;
 						}
 				}

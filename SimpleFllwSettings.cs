@@ -24,5 +24,7 @@ namespace SimpleFllw
 		[Menu("Follow Close")] public ToggleNode IsCloseFollowEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Draw Follow Marker")] public ToggleNode IsDrawFollowMarkerEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Draw Move Key Marker")] public ToggleNode IsDrawKeyMarkerEnabled { get; set; } = new ToggleNode(false);
+		[Menu("Loot Quest Items")] public ToggleNode IsLootQuestItemsEnabled { get; set; } = new ToggleNode(true);
+		[Menu("Auto Pick Up Waypoint")] public ToggleNode IsAutoPickUpWaypointEnabled { get; set; } = new ToggleNode(true);
 	}
 }
