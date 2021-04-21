@@ -311,15 +311,15 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
-								backDirection.Normalize();
-								backDirection *= 120;
 
-								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
-
-								if (currentTask.AttemptCount > 2)
+								if (currentTask.AttemptCount == 2)
 								{
-									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
+									Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
+									backDirection.Normalize();
+									backDirection *= 120;
+
+									_lastTargetPosition = currentTask.WorldPosition + backDirection;
+									/* var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
 									Thread.Sleep(random.Next(25) + 30);
@@ -330,15 +330,18 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 800);
 									Input.KeyUp(Settings.MovementKey);
 
-									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								}
+									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);*/
 
-								//Click the transition
-								Input.KeyUp(Settings.MovementKey);
-								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-								//
-								_nextBotAction = DateTime.Now.AddSeconds(1);
-								Thread.Sleep(random.Next(25) + 200);
+									_tasks.Add(new TaskNode(_lastTargetPosition, Settings.PathfindingNodeDistance));
+								}
+								else
+								{
+									//Click the transition
+									Input.KeyUp(Settings.MovementKey);
+									Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
+									//
+									_nextBotAction = DateTime.Now.AddSeconds(1);
+								}
 							}
 							else
 							{
