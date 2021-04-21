@@ -311,7 +311,7 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
+								Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
 								backDirection *= 120;
 
@@ -326,8 +326,8 @@ namespace SimpleFllw
 									Input.KeyDown(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 30);
 									
-									_nextBotAction = DateTime.Now.AddSeconds(2);
-									Thread.Sleep(random.Next(25) + 1000);
+									_nextBotAction = DateTime.Now.AddSeconds(1);
+									Thread.Sleep(random.Next(25) + 800);
 									Input.KeyUp(Settings.MovementKey);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
