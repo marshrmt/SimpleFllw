@@ -207,7 +207,13 @@ namespace SimpleFllw
 					Where(I => Vector3.Distance(_lastTargetPosition, I.Pos) < Settings.ClearPathDistance).
 					OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
 				if (transOptions.Length > 0)
-					_tasks.Add(new TaskNode(transOptions[random.Next(transOptions.Length)].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
+				{
+					if (Settings.SlotNumber < transOptions.Length)
+					{
+						_tasks.Add(new TaskNode(transOptions[Settings.SlotNumber].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
+					}
+					
+				}
 			}
 
 			//Don't run tasks if looting
@@ -341,7 +347,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 10)
+							if (currentTask.AttemptCount > 3)
 							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
@@ -361,7 +367,7 @@ namespace SimpleFllw
 								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 7)
+							if (currentTask.AttemptCount > 3)
 							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
