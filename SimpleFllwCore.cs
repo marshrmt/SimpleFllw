@@ -308,18 +308,17 @@ namespace SimpleFllw
 					case TaskNodeType.Transition:
 						{
 							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
-							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
+												
 							//if (taskDistance <= Settings.ClearPathDistance.Value)
 							//{
 
-								if (currentTask.AttemptCount == 3)
+								if (currentTask.AttemptCount > 2)
 								{
 									Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 									backDirection.Normalize();
 									backDirection *= 180;
 
-									//_lastTargetPosition = currentTask.WorldPosition + backDirection;
-									/* var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
+									var stepBackScreenPos = WorldToValidScreenPosition(currentTask.WorldPosition + backDirection);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
 									Thread.Sleep(random.Next(25) + 30);
@@ -327,21 +326,19 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 30);
 									
 									_nextBotAction = DateTime.Now.AddSeconds(1);
-									Thread.Sleep(random.Next(25) + 800);
+									Thread.Sleep(random.Next(25) + 700);
 									Input.KeyUp(Settings.MovementKey);
 
-									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);*/
+								}
 
-									_tasks.Insert(0, new TaskNode(currentTask.WorldPosition + backDirection, Settings.ClearPathDistance));
-								}
-								else
-								{
-									//Click the transition
-									Input.KeyUp(Settings.MovementKey);
-									Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-									//
-									_nextBotAction = DateTime.Now.AddSeconds(1);
-								}
+
+								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
+								//Click the transition
+								Input.KeyUp(Settings.MovementKey);
+								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
+								//
+								_nextBotAction = DateTime.Now.AddSeconds(1);
+								
 							/*}
 							else
 							{
