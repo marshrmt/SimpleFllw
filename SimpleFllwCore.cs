@@ -299,12 +299,11 @@ namespace SimpleFllw
 						}
 					case TaskNodeType.Transition:
 						{
-							//_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
-							_nextBotAction = DateTime.Now.AddSeconds(2);
+							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
+								/*Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
 								backDirection *= 150;
 
@@ -322,12 +321,12 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 700);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								}
+								}*/
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-								Thread.Sleep(random.Next(25) + 200);
+								//Thread.Sleep(random.Next(25) + 200);
 								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
 							else
@@ -342,20 +341,6 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
-
-							if (currentTask.AttemptCount % 2 == 0)
-							{
-								// multiple followers: change used portals
-								ResetTransitions();
-								var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
-								var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
-								if (dist < Settings.ClearPathDistance.Value)
-								{
-									_tasks.RemoveAt(0);
-									_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
-								}
-							}
-
 							if (currentTask.AttemptCount > 10)
 							{
 								_tasks.RemoveAt(0);
