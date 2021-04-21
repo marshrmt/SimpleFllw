@@ -209,7 +209,7 @@ namespace SimpleFllw
 				if (transOptions.Length > 0)
 				{
 					int transNumber = Settings.SlotNumber + 1;
-					if (Settings.SlotNumber >= transOptions.Length)
+					if (transNumber >= transOptions.Length)
 					{
 						transNumber = random.Next(transOptions.Length);
 					}
@@ -311,7 +311,7 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								/*Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
+								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
 								backDirection *= 150;
 
@@ -326,16 +326,17 @@ namespace SimpleFllw
 									Input.KeyDown(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 30);
 									Input.KeyUp(Settings.MovementKey);
-									Thread.Sleep(random.Next(25) + 700);
+									Thread.Sleep(random.Next(25) + 400);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								}*/
+								}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-								//Thread.Sleep(random.Next(25) + 200);
+								//
 								_nextBotAction = DateTime.Now.AddSeconds(1);
+								Thread.Sleep(random.Next(25) + 200);
 							}
 							else
 							{
@@ -349,7 +350,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 3)
+							if (currentTask.AttemptCount > 6)
 							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
