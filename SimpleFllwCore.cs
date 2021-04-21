@@ -299,7 +299,8 @@ namespace SimpleFllw
 						}
 					case TaskNodeType.Transition:
 						{
-							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
+							//_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
+							_nextBotAction = DateTime.Now.AddSeconds(2);
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
