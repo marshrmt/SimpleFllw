@@ -327,7 +327,7 @@ namespace SimpleFllw
 							{
 								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
-								backDirection *= 180;
+								backDirection *= 200;
 
 								var stepBackScreenPos = WorldToValidScreenPosition(currentTask.WorldPosition + backDirection);
 								Input.KeyUp(Settings.MovementKey);
@@ -337,7 +337,7 @@ namespace SimpleFllw
 								Thread.Sleep(random.Next(25) + 30);
 
 								_nextBotAction = DateTime.Now.AddSeconds(1);
-								Thread.Sleep(random.Next(25) + 400);
+								Thread.Sleep(random.Next(25) + 600);
 								Input.KeyUp(Settings.MovementKey);
 							}
 							else {
