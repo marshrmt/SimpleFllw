@@ -314,11 +314,11 @@ namespace SimpleFllw
 
 								if (currentTask.AttemptCount == 2)
 								{
-									Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
+									Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
 									backDirection.Normalize();
 									backDirection *= 120;
 
-									_lastTargetPosition = currentTask.WorldPosition + backDirection;
+									//_lastTargetPosition = currentTask.WorldPosition + backDirection;
 									/* var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
@@ -332,7 +332,7 @@ namespace SimpleFllw
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);*/
 
-									_tasks.Add(new TaskNode(_lastTargetPosition, Settings.PathfindingNodeDistance));
+									_tasks.Add(new TaskNode(currentTask.WorldPosition + backDirection, Settings.ClearPathDistance));
 								}
 								else
 								{
