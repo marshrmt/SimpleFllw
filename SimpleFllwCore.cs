@@ -314,7 +314,7 @@ namespace SimpleFllw
 
 								if (currentTask.AttemptCount == 2)
 								{
-									Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
+									Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
 									backDirection.Normalize();
 									backDirection *= 120;
 
@@ -332,7 +332,7 @@ namespace SimpleFllw
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);*/
 
-									_tasks.Add(new TaskNode(currentTask.WorldPosition + backDirection, Settings.ClearPathDistance));
+									_tasks.Insert(0, new TaskNode(_lastTargetPosition, Settings.ClearPathDistance));
 								}
 								else
 								{
