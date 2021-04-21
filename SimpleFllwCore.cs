@@ -320,6 +320,7 @@ namespace SimpleFllw
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
+								Thread.Sleep(random.Next(25) + 300);
 								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
 							else
