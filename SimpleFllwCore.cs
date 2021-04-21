@@ -326,7 +326,7 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 30);
 									
 									_nextBotAction = DateTime.Now.AddSeconds(1);
-									Thread.Sleep(random.Next(25) + 700);
+									Thread.Sleep(random.Next(25) + 500);
 									Input.KeyUp(Settings.MovementKey);
 
 								}
@@ -352,7 +352,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}*/
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 6)
+							if (currentTask.AttemptCount > 4)
 							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
