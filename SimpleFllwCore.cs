@@ -311,25 +311,27 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
+								Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
 								backDirection.Normalize();
-								backDirection *= 150;
+								backDirection *= 120;
 
 								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
 
-								//if (currentTask.AttemptCount > 1)
-								//{
+								if (currentTask.AttemptCount > 2)
+								{
 									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
 									Thread.Sleep(random.Next(25) + 30);
 									Input.KeyDown(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 30);
+									
+									_nextBotAction = DateTime.Now.AddSeconds(2);
+									Thread.Sleep(random.Next(25) + 1000);
 									Input.KeyUp(Settings.MovementKey);
-									Thread.Sleep(random.Next(25) + 600);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								//}
+								}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);

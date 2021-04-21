@@ -180,6 +180,7 @@ namespace SimpleFllw
 
         public static void SetCursorPosAndLeftClickHuman(Vector2 coords, int extraDelay)
         {
+            LeftMouseUp();
             SetCursorPosition(coords);
             Thread.Sleep(MovementDelay + extraDelay);
             LeftMouseDown();
