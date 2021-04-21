@@ -143,7 +143,7 @@ namespace SimpleFllw
 					{
 						var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
 						var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
-						if (Vector3.Distance(_lastTargetPosition, transition.Pos) < Settings.ClearPathDistance.Value)
+						if (dist < Settings.ClearPathDistance.Value)
 							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
 					}
 					//We have no path, set us to go to leader pos.
@@ -305,12 +305,12 @@ namespace SimpleFllw
 							{
 								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
-								backDirection *= 100;
+								backDirection *= 200;
 
 								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
 
-								if (currentTask.AttemptCount > 1)
-								{
+								//if (currentTask.AttemptCount > 1)
+								//{
 									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
@@ -321,7 +321,7 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 200);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								}
+								//}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
@@ -341,7 +341,17 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
+
+							// multiple followers: change used portals
 							ResetTransitions();
+							var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
+							var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
+							if (dist < Settings.ClearPathDistance.Value)
+							{
+								_tasks.RemoveAt(0);
+								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+							}
+
 							if (currentTask.AttemptCount > 10)
 							{
 								_tasks.RemoveAt(0);
