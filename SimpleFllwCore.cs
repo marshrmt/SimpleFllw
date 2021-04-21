@@ -67,7 +67,7 @@ namespace SimpleFllw
 			_followTarget = null;
 			_lastTargetPosition = Vector3.Zero;
 			_lastPlayerPosition = Vector3.Zero;
-			_areaTransitions = new Dictionary<uint, Entity>();
+			
 			_hasUsedWP = false;
 		}
 
@@ -77,15 +77,21 @@ namespace SimpleFllw
 
 			//Load initial transitions!
 
+			ResetTransitions();
+		}
+
+		private void ResetTransitions()
+		{
+			_areaTransitions = new Dictionary<uint, Entity>();
+
 			foreach (var transition in GameController.EntityListWrapper.Entities.Where(I => I.Type == ExileCore.Shared.Enums.EntityType.AreaTransition ||
 			 I.Type == ExileCore.Shared.Enums.EntityType.Portal ||
 			 I.Type == ExileCore.Shared.Enums.EntityType.TownPortal).ToList())
 			{
-				if(!_areaTransitions.ContainsKey(transition.Id))
+				if (!_areaTransitions.ContainsKey(transition.Id))
 					_areaTransitions.Add(transition.Id, transition);
 			}
 		}
-
 
 		private void MouseoverItem(Entity item)
 		{
@@ -297,7 +303,7 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
+								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
 								backDirection *= 100;
 
@@ -312,7 +318,7 @@ namespace SimpleFllw
 									Input.KeyDown(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 30);
 									Input.KeyUp(Settings.MovementKey);
-									Thread.Sleep(random.Next(25) + 400);
+									Thread.Sleep(random.Next(25) + 200);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
 								}
@@ -320,7 +326,7 @@ namespace SimpleFllw
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-								Thread.Sleep(random.Next(25) + 300);
+								Thread.Sleep(random.Next(25) + 200);
 								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
 							else
@@ -335,6 +341,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							currentTask.AttemptCount++;
+							ResetTransitions();
 							if (currentTask.AttemptCount > 10)
 							{
 								_tasks.RemoveAt(0);
