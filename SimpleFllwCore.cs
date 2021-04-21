@@ -305,12 +305,12 @@ namespace SimpleFllw
 							{
 								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 								backDirection.Normalize();
-								backDirection *= 200;
+								backDirection *= 150;
 
 								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
 
-								//if (currentTask.AttemptCount > 1)
-								//{
+								if (currentTask.AttemptCount > 1)
+								{
 									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
@@ -318,10 +318,10 @@ namespace SimpleFllw
 									Input.KeyDown(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 30);
 									Input.KeyUp(Settings.MovementKey);
-									Thread.Sleep(random.Next(25) + 200);
+									Thread.Sleep(random.Next(25) + 700);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								//}
+								}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
@@ -342,14 +342,17 @@ namespace SimpleFllw
 							}
 							currentTask.AttemptCount++;
 
-							// multiple followers: change used portals
-							ResetTransitions();
-							var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
-							var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
-							if (dist < Settings.ClearPathDistance.Value)
+							if (currentTask.AttemptCount % 2 == 0)
 							{
-								_tasks.RemoveAt(0);
-								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+								// multiple followers: change used portals
+								ResetTransitions();
+								var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
+								var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
+								if (dist < Settings.ClearPathDistance.Value)
+								{
+									_tasks.RemoveAt(0);
+									_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+								}
 							}
 
 							if (currentTask.AttemptCount > 10)
