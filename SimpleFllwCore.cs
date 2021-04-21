@@ -32,6 +32,7 @@ namespace SimpleFllw
 		
 		private Vector3 _lastTargetPosition;
 		private Vector3 _lastPlayerPosition;
+		private Vector3 _beforeLastPlayerPosition;
 		private Entity _followTarget;
 
 		private bool _hasUsedWP = false;
@@ -67,6 +68,7 @@ namespace SimpleFllw
 			_followTarget = null;
 			_lastTargetPosition = Vector3.Zero;
 			_lastPlayerPosition = Vector3.Zero;
+			_beforeLastPlayerPosition = Vector3.Zero;
 			_areaTransitions = new Dictionary<uint, Entity>();
 			_hasUsedWP = false;
 		}
@@ -227,6 +229,7 @@ namespace SimpleFllw
 						currentTask = _tasks.First();
 					else
 					{
+						_beforeLastPlayerPosition = _lastPlayerPosition;
 						_lastPlayerPosition = GameController.Player.Pos;
 						return null;
 					}
@@ -297,10 +300,22 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
-								Input.KeyUp(Settings.MovementKey);
-								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
-								Thread.Sleep(random.Next(25) + 400);
+								var _stepBackPos = _lastPlayerPosition;
+
+								if (currentTask.AttemptCount > 4)
+								{
+									_stepBackPos = _beforeLastPlayerPosition;
+								}
+
+								if (currentTask.AttemptCount > 1)
+								{
+									var stepBackScreenPos = WorldToValidScreenPosition(_stepBackPos);
+									Input.KeyUp(Settings.MovementKey);
+									Mouse.SetCursorPosHuman2(stepBackScreenPos);
+									Thread.Sleep(random.Next(25) + 30);
+									Input.KeyDown(Settings.MovementKey);
+									Thread.Sleep(random.Next(25) + 400);
+								}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
@@ -333,11 +348,6 @@ namespace SimpleFllw
 							{
 								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
 
-								var stepBackScreenPos = WorldToValidScreenPosition(_lastPlayerPosition);
-								Input.KeyUp(Settings.MovementKey);
-								Mouse.SetCursorPosAndLeftClickHuman(stepBackScreenPos, 100);
-								Thread.Sleep(random.Next(25) + 200);
-
 								Input.KeyUp(Settings.MovementKey);
 								Thread.Sleep(Settings.BotInputFrequency);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
@@ -363,6 +373,7 @@ namespace SimpleFllw
 				}
 			}
 
+			_beforeLastPlayerPosition = _lastPlayerPosition;
 			_lastPlayerPosition = GameController.Player.Pos;
 			return null;
 		}
@@ -487,7 +498,7 @@ namespace SimpleFllw
 			var screenPos = Camera.WorldToScreen(worldPos);
 			var result = screenPos + windowRect.Location;
 
-			var edgeBounds = 50;
+			var edgeBounds = 150;
 			if (!windowRect.Intersects(new SharpDX.RectangleF(result.X, result.Y, edgeBounds, edgeBounds)))
 			{
 				//Adjust for offscreen entity. Need to clamp the screen position using the game window info. 
