@@ -317,8 +317,8 @@ namespace SimpleFllw
 
 								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
 
-								if (currentTask.AttemptCount > 1)
-								{
+								//if (currentTask.AttemptCount > 1)
+								//{
 									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
@@ -329,7 +329,7 @@ namespace SimpleFllw
 									Thread.Sleep(random.Next(25) + 600);
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								}
+								//}
 
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
