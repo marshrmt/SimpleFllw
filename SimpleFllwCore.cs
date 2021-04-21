@@ -336,8 +336,8 @@ namespace SimpleFllw
 								Input.KeyDown(Settings.MovementKey);
 								Thread.Sleep(random.Next(25) + 30);
 
-								_nextBotAction = DateTime.Now.AddSeconds(1);
-								Thread.Sleep(random.Next(25) + 500);
+								_nextBotAction = DateTime.Now.AddSeconds(0.5);
+								Thread.Sleep(random.Next(25) + 200);
 								Input.KeyUp(Settings.MovementKey);
 							}
 							else {
@@ -346,8 +346,9 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
 								//
+								_nextBotAction = DateTime.Now.AddSeconds(1);
 							}
-							_nextBotAction = DateTime.Now.AddSeconds(1);
+							
 								
 							/*}
 							else
