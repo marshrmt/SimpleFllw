@@ -113,6 +113,7 @@ namespace SimpleFllw
 			if (!GameController.Player.IsAlive)
 			{
 				Input.KeyUp(Settings.MovementKey);
+				Input.KeyUp(Settings.DashKey);
 				return null;
 			}
 
@@ -125,6 +126,7 @@ namespace SimpleFllw
 			if (!Settings.IsFollowEnabled.Value)
 			{
 				Input.KeyUp(Settings.MovementKey);
+				Input.KeyUp(Settings.DashKey);
 				return null;
 			}
 
@@ -271,8 +273,8 @@ namespace SimpleFllw
 							Input.KeyDown(Settings.MovementKey);
 						}
 
-						// dashing if inabled 
-						if (Settings.IsDashEnabled)
+						// dashing if enabled and far from target
+						if (Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > Settings.PathfindingNodeDistance.Value * 2)
 						{
 							Input.KeyDown(Settings.DashKey);
 							Thread.Sleep(random.Next(25) + 30);
