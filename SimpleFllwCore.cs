@@ -309,16 +309,16 @@ namespace SimpleFllw
 						{
 							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency * 2 + random.Next(Settings.BotInputFrequency));
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
-							if (taskDistance <= Settings.ClearPathDistance.Value)
-							{
+							//if (taskDistance <= Settings.ClearPathDistance.Value)
+							//{
 
-								if (currentTask.AttemptCount == 2)
+								if (currentTask.AttemptCount == 3)
 								{
-									Vector3 backDirection = _lastTargetPosition - currentTask.WorldPosition;
+									Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 									backDirection.Normalize();
-									backDirection *= 120;
+									backDirection *= 180;
 
-									_lastTargetPosition = currentTask.WorldPosition + backDirection;
+									//_lastTargetPosition = currentTask.WorldPosition + backDirection;
 									/* var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
@@ -332,7 +332,7 @@ namespace SimpleFllw
 
 									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);*/
 
-									_tasks.Insert(0, new TaskNode(_lastTargetPosition, Settings.ClearPathDistance));
+									_tasks.Insert(0, new TaskNode(currentTask.WorldPosition + backDirection, Settings.ClearPathDistance));
 								}
 								else
 								{
@@ -342,7 +342,7 @@ namespace SimpleFllw
 									//
 									_nextBotAction = DateTime.Now.AddSeconds(1);
 								}
-							}
+							/*}
 							else
 							{
 								//Walk towards the transition
@@ -353,7 +353,7 @@ namespace SimpleFllw
 								Input.KeyDown(Settings.MovementKey);
 								Thread.Sleep(random.Next(25) + 30);
 								Input.KeyUp(Settings.MovementKey);
-							}
+							}*/
 							currentTask.AttemptCount++;
 							if (currentTask.AttemptCount > 6)
 							{
