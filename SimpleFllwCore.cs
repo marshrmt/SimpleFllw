@@ -312,32 +312,34 @@ namespace SimpleFllw
 							//if (taskDistance <= Settings.ClearPathDistance.Value)
 							//{
 
-								if (currentTask.AttemptCount == 3)
-								{
-									Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
-									backDirection.Normalize();
-									backDirection *= 180;
+							if (currentTask.AttemptCount == 3)
+							{
+								Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
+								backDirection.Normalize();
+								backDirection *= 180;
+								_lastTargetPosition = currentTask.WorldPosition + backDirection;
 
-									var stepBackScreenPos = WorldToValidScreenPosition(currentTask.WorldPosition + backDirection);
-									Input.KeyUp(Settings.MovementKey);
-									Mouse.SetCursorPosHuman2(stepBackScreenPos);
-									Thread.Sleep(random.Next(25) + 30);
-									Input.KeyDown(Settings.MovementKey);
-									Thread.Sleep(random.Next(25) + 30);
-									
-									_nextBotAction = DateTime.Now.AddSeconds(1);
-									Thread.Sleep(random.Next(25) + 500);
-									Input.KeyUp(Settings.MovementKey);
-
-								}
-
-
-								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
-								//Click the transition
+								var stepBackScreenPos = WorldToValidScreenPosition(_lastTargetPosition);
 								Input.KeyUp(Settings.MovementKey);
-								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
-								//
+								Mouse.SetCursorPosHuman2(stepBackScreenPos);
+								Thread.Sleep(random.Next(25) + 30);
+								Input.KeyDown(Settings.MovementKey);
+								Thread.Sleep(random.Next(25) + 30);
+									
 								_nextBotAction = DateTime.Now.AddSeconds(1);
+								Thread.Sleep(random.Next(25) + 500);
+								Input.KeyUp(Settings.MovementKey);
+
+									
+							}
+
+
+							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
+							//Click the transition
+							Input.KeyUp(Settings.MovementKey);
+							Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
+							//
+							_nextBotAction = DateTime.Now.AddSeconds(1);
 								
 							/*}
 							else
