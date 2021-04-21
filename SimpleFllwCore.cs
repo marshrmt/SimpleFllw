@@ -208,11 +208,13 @@ namespace SimpleFllw
 					OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
 				if (transOptions.Length > 0)
 				{
-					if (Settings.SlotNumber < transOptions.Length)
+					int transNumber = Settings.SlotNumber + 1;
+					if (Settings.SlotNumber >= transOptions.Length)
 					{
-						_tasks.Add(new TaskNode(transOptions[Settings.SlotNumber].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
+						transNumber = random.Next(transOptions.Length);
 					}
-					
+
+					_tasks.Add(new TaskNode(transOptions[transNumber].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
 				}
 			}
 
