@@ -265,9 +265,18 @@ namespace SimpleFllw
 
 						Mouse.SetCursorPosHuman2(WorldToValidScreenPosition(corrected));
 						Thread.Sleep(random.Next(25) + 30);
+						
 						if (!Input.GetKeyState(Settings.MovementKey))
 						{
 							Input.KeyDown(Settings.MovementKey);
+						}
+
+						// dashing if inabled 
+						if (Settings.IsDashEnabled)
+						{
+							Input.KeyDown(Settings.DashKey);
+							Thread.Sleep(random.Next(25) + 30);
+							Input.KeyUp(Settings.DashKey);
 						}
 
 						//Within bounding range. Task is complete
