@@ -352,7 +352,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}*/
 							currentTask.AttemptCount++;
-							if (currentTask.AttemptCount > 4)
+							if (currentTask.AttemptCount > 3)
 							{
 								_tasks.RemoveAt(0);
 								Input.KeyUp(Settings.MovementKey);
