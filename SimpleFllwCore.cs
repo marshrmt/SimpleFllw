@@ -32,7 +32,6 @@ namespace SimpleFllw
 		
 		private Vector3 _lastTargetPosition;
 		private Vector3 _lastPlayerPosition;
-		private Vector3 _beforeLastPlayerPosition;
 		private Entity _followTarget;
 
 		private bool _hasUsedWP = false;
@@ -68,7 +67,6 @@ namespace SimpleFllw
 			_followTarget = null;
 			_lastTargetPosition = Vector3.Zero;
 			_lastPlayerPosition = Vector3.Zero;
-			_beforeLastPlayerPosition = Vector3.Zero;
 			_areaTransitions = new Dictionary<uint, Entity>();
 			_hasUsedWP = false;
 		}
@@ -229,7 +227,6 @@ namespace SimpleFllw
 						currentTask = _tasks.First();
 					else
 					{
-						_beforeLastPlayerPosition = _lastPlayerPosition;
 						_lastPlayerPosition = GameController.Player.Pos;
 						return null;
 					}
@@ -300,21 +297,24 @@ namespace SimpleFllw
 							var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);							
 							if (taskDistance <= Settings.ClearPathDistance.Value)
 							{
-								var _stepBackPos = _lastPlayerPosition;
+								Vector3 backDirection = GameController.Player.Pos - currentTask.WorldPosition;
+								backDirection.Normalize();
+								backDirection *= 100;
 
-								if (currentTask.AttemptCount > 4)
-								{
-									_stepBackPos = _beforeLastPlayerPosition;
-								}
+								Vector3 correctedDir = currentTask.WorldPosition + backDirection;
 
 								if (currentTask.AttemptCount > 1)
 								{
-									var stepBackScreenPos = WorldToValidScreenPosition(_stepBackPos);
+									var stepBackScreenPos = WorldToValidScreenPosition(correctedDir);
 									Input.KeyUp(Settings.MovementKey);
 									Mouse.SetCursorPosHuman2(stepBackScreenPos);
 									Thread.Sleep(random.Next(25) + 30);
 									Input.KeyDown(Settings.MovementKey);
+									Thread.Sleep(random.Next(25) + 30);
+									Input.KeyUp(Settings.MovementKey);
 									Thread.Sleep(random.Next(25) + 400);
+
+									screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
 								}
 
 								//Click the transition
@@ -374,7 +374,6 @@ namespace SimpleFllw
 				}
 			}
 
-			_beforeLastPlayerPosition = _lastPlayerPosition;
 			_lastPlayerPosition = GameController.Player.Pos;
 			return null;
 		}
