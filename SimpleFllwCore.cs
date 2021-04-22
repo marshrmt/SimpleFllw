@@ -341,11 +341,11 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							else {
-								var zOffset = -60;
+								var zOffset = -30;
 
 								if (currentTask.AttemptCount <= 3)
 								{
-									zOffset = currentTask.AttemptCount * -60;
+									zOffset = currentTask.AttemptCount * -40;
 								}
 
 								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, zOffset);
