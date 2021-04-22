@@ -341,7 +341,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							else {
-								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, -100);
+								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, currentTask.AttemptCount * -70);
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
