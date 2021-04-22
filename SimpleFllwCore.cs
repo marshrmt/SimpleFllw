@@ -341,7 +341,7 @@ namespace SimpleFllw
 								Input.KeyUp(Settings.MovementKey);
 							}
 							else {
-								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition);
+								var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, 100);
 								//Click the transition
 								Input.KeyUp(Settings.MovementKey);
 								Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
@@ -519,7 +519,6 @@ namespace SimpleFllw
 			}
 		}
 
-
 		private Vector2 WorldToValidScreenPosition(Vector3 worldPos)
 		{
 			var windowRect = GameController.Window.GetWindowRectangle();
@@ -536,6 +535,13 @@ namespace SimpleFllw
 				if (result.Y > windowRect.BottomRight.Y) result.Y = windowRect.BottomRight.Y - edgeBounds;
 			}
 			return result;
+		}
+
+		private Vector2 WorldToValidScreenPosition(Vector3 worldPos, float zOffset)
+		{
+			var correctedPos = new Vector3(worldPos.X, worldPos.Y, worldPos.Z + zOffset);
+
+			return WorldToValidScreenPosition(correctedPos);
 		}
 	}
 }
