@@ -274,7 +274,7 @@ namespace SimpleFllw
 						}
 
 						// dashing if enabled and far from target
-						if (Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > Settings.PathfindingNodeDistance.Value * 3)
+						if (_followTarget != null && Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > Settings.PathfindingNodeDistance.Value * 3)
 						{
 							Input.KeyDown(Settings.DashKey);
 							Thread.Sleep(random.Next(25) + 30);
@@ -401,11 +401,18 @@ namespace SimpleFllw
 			}
 			else
 			{
-				var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
-
-				if (recheckDistance <= Settings.PathfindingNodeDistance.Value)
+				if (GameController?.Player?.Pos == null || _followTarget?.Pos == null)
 				{
 					Input.KeyUp(Settings.MovementKey);
+				}
+				else
+				{
+					var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
+
+					if (recheckDistance <= Settings.PathfindingNodeDistance.Value)
+					{
+						Input.KeyUp(Settings.MovementKey);
+					}
 				}
 			}
 
