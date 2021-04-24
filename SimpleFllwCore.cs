@@ -133,7 +133,7 @@ namespace SimpleFllw
 				}
 
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
-				var _dt = Settings.PathfindingNodeDistance.Value * 2;
+				var _dt = Settings.PathfindingNodeDistance.Value * 3;
 
 				foreach (var _t in _areaTransitions)
 				{
@@ -141,7 +141,7 @@ namespace SimpleFllw
 					{
 						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance *= 2;
+							_pathfindingDistance *= 3;
 							break;
 						}
 					}
@@ -343,7 +343,7 @@ namespace SimpleFllw
 								{
 									Vector3 backDirection = _lastPlayerPosition - currentTask.WorldPosition;
 									backDirection.Normalize();
-									backDirection *= 200;
+									backDirection *= 130;
 
 									var stepBackScreenPos = WorldToValidScreenPosition(currentTask.WorldPosition + backDirection);
 									Input.KeyUp(Settings.MovementKey);
