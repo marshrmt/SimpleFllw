@@ -369,10 +369,13 @@ namespace SimpleFllw
 									
 									Input.KeyUp(Settings.MovementKey);
 
-									// Use quartz flask (slot 4) just incase
-									Input.KeyDown(System.Windows.Forms.Keys.D4);
-									Thread.Sleep(random.Next(25) + 30);
-									Input.KeyUp(System.Windows.Forms.Keys.D4);
+									if (currentTask.AttemptCount == 0)
+									{
+										// Use quartz flask (slot 4) just incase
+										Input.KeyDown(System.Windows.Forms.Keys.D4);
+										Thread.Sleep(random.Next(25) + 30);
+										Input.KeyUp(System.Windows.Forms.Keys.D4);
+									}
 
 									//Click the transition
 									Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
