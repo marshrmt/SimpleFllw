@@ -133,14 +133,15 @@ namespace SimpleFllw
 				}
 
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
+				var _dt = Settings.PathfindingNodeDistance.Value * 2;
 
 				foreach (var _t in _areaTransitions)
 				{
 					if (_t.Value?.Pos != null && GameController?.Player?.Pos != null)
 					{
-						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= Settings.PathfindingNodeDistance.Value * 3)
+						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance *= 3;
+							_pathfindingDistance *= 2;
 							break;
 						}
 					}
@@ -365,8 +366,15 @@ namespace SimpleFllw
 									}
 
 									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, zOffset);
-									//Click the transition
+									
 									Input.KeyUp(Settings.MovementKey);
+
+									// Use quartz flask (slot 4) just incase
+									Input.KeyDown(System.Windows.Forms.Keys.D4);
+									Thread.Sleep(random.Next(25) + 30);
+									Input.KeyUp(System.Windows.Forms.Keys.D4);
+
+									//Click the transition
 									Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
 									//
 									_nextBotAction = DateTime.Now.AddSeconds(1);
