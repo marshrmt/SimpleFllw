@@ -132,6 +132,19 @@ namespace SimpleFllw
 					return null;
 				}
 
+				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
+
+				foreach (var _t in _areaTransitions)
+				{
+					if (_t.Value?.Pos != null && GameController?.Player?.Pos != null)
+					{
+						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= Settings.PathfindingNodeDistance.Value * 3)
+						{
+							_pathfindingDistance *= 3;
+							break;
+						}
+					}
+				}
 
 				//Cache the current follow target (if present)
 				_followTarget = GetFollowingTarget();
@@ -173,7 +186,7 @@ namespace SimpleFllw
 						else if (Settings.IsCloseFollowEnabled.Value)
 						{
 							//Close follow logic. We have no current tasks. Check if we should move towards leader
-							if (distanceFromFollower >= Settings.PathfindingNodeDistance.Value)
+							if (distanceFromFollower >= _pathfindingDistance)
 								_tasks.Add(new TaskNode(_followTarget.Pos, Settings.PathfindingNodeDistance));
 						}
 
@@ -218,7 +231,7 @@ namespace SimpleFllw
 							transNumber = random.Next(transOptions.Length);
 						}
 
-						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, Settings.PathfindingNodeDistance.Value, TaskNodeType.Transition));
+						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
 					}
 				}
 
@@ -276,7 +289,7 @@ namespace SimpleFllw
 							}
 
 							// dashing if enabled and far from target
-							if (_followTarget != null && Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > Settings.PathfindingNodeDistance.Value * 3)
+							if (_followTarget != null && Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > _pathfindingDistance * 3)
 							{
 								Input.KeyDown(Settings.DashKey);
 								Thread.Sleep(random.Next(25) + 30);
@@ -285,7 +298,7 @@ namespace SimpleFllw
 
 							//Within bounding range. Task is complete
 							//Note: Was getting stuck on close objects... testing hacky fix.
-							if (taskDistance <= Settings.PathfindingNodeDistance.Value * 1.5)
+							if (taskDistance <= _pathfindingDistance * 1.5)
 								_tasks.RemoveAt(0);
 							break;
 						case TaskNodeType.Loot:
@@ -412,7 +425,7 @@ namespace SimpleFllw
 					{
 						var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 
-						if (recheckDistance <= Settings.PathfindingNodeDistance.Value)
+						if (recheckDistance <= _pathfindingDistance)
 						{
 							Input.KeyUp(Settings.MovementKey);
 						}
