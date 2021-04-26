@@ -133,7 +133,7 @@ namespace SimpleFllw
 				}
 
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
-				var _dt = Settings.PathfindingNodeDistance.Value * 3;
+				var _dt = Settings.PathfindingNodeDistance.Value * 2.5;
 
 				foreach (var _t in _areaTransitions)
 				{
@@ -141,7 +141,7 @@ namespace SimpleFllw
 					{
 						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance *= 3;
+							_pathfindingDistance *= 2.5;
 							break;
 						}
 					}
@@ -226,12 +226,18 @@ namespace SimpleFllw
 						OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
 					if (transOptions.Length > 0)
 					{
-						int transNumber = Settings.SlotNumber + 1;
-						if (transNumber >= transOptions.Length)
-						{
-							transNumber = random.Next(transOptions.Length);
-						}
+						int transNumber = 0;
 
+						if (transOptions.Length > 2)
+						{
+							transNumber = Settings.SlotNumber + 1;
+
+							if (transNumber >= transOptions.Length)
+							{
+								transNumber = transOptions.Length - 1;
+							}
+
+						}
 						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
 					}
 				}
@@ -436,7 +442,7 @@ namespace SimpleFllw
 					{
 						var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 
-						if (recheckDistance <= _pathfindingDistance * 1.2)
+						if (recheckDistance <= _pathfindingDistance)
 						{
 							Input.KeyUp(Settings.MovementKey);
 						}
