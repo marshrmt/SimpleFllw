@@ -54,6 +54,8 @@ namespace SimpleFllw
 			Input.RegisterKey(Settings.ToggleFollower.Value);
 			Settings.ToggleFollower.OnValueChanged += () => { Input.RegisterKey(Settings.ToggleFollower.Value); };
 
+			Input.RegisterKey(Settings.ClearTasksKey.Value);
+
 			return base.Initialise();
 		}
 
