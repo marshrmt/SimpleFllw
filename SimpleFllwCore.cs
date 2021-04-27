@@ -119,6 +119,11 @@ namespace SimpleFllw
 					return null;
 				}
 
+				if (Settings.ClearTasksKey.PressedOnce())
+				{
+					_tasks = new List<TaskNode>();
+				}
+
 				if (Settings.ToggleFollower.PressedOnce())
 				{
 					Settings.IsFollowEnabled.SetValueNoEvent(!Settings.IsFollowEnabled.Value);
@@ -141,7 +146,7 @@ namespace SimpleFllw
 					{
 						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance *= 2.5;
+							_pathfindingDistance = (int) ((float) _pathfindingDistance * 2.5);
 							break;
 						}
 					}

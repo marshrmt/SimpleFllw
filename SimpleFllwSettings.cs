@@ -27,5 +27,6 @@ namespace SimpleFllw
 		[Menu("Draw Move Key Marker")] public ToggleNode IsDrawKeyMarkerEnabled { get; set; } = new ToggleNode(false);
 		[Menu("Loot Quest Items")] public ToggleNode IsLootQuestItemsEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Auto Pick Up Waypoint")] public ToggleNode IsAutoPickUpWaypointEnabled { get; set; } = new ToggleNode(true);
+		[Menu("Clear Tasks Key")] public HotkeyNode ClearTasksKey { get; set; } = Keys.P;
 	}
 }
