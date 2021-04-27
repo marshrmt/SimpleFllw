@@ -164,7 +164,7 @@ namespace SimpleFllw
 					{
 						//Leader moved VERY far in one frame. Check for transition to use to follow them.
 						var distanceMoved = Vector3.Distance(_lastTargetPosition, _followTarget.Pos);
-						if (_lastTargetPosition != Vector3.Zero && distanceMoved > Settings.ClearPathDistance.Value)
+						if (_lastTargetPosition != Vector3.Zero && distanceMoved > Settings.ClearPathDistance.Value * 2)
 						{
 							var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
 							var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
