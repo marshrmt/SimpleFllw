@@ -54,7 +54,7 @@ namespace SimpleFllw
 			Input.RegisterKey(Settings.ToggleFollower.Value);
 			Settings.ToggleFollower.OnValueChanged += () => { Input.RegisterKey(Settings.ToggleFollower.Value); };
 
-			Input.RegisterKey(Settings.ClearTasksKey.Value);
+			Input.RegisterKey(Settings.ClearTasksTransitionKey.Value);
 
 			return base.Initialise();
 		}
@@ -112,7 +112,6 @@ namespace SimpleFllw
 		{
 			try
 			{
-
 				//Dont run logic if we're dead!
 				if (!GameController.Player.IsAlive)
 				{
@@ -121,9 +120,13 @@ namespace SimpleFllw
 					return null;
 				}
 
-				if (Settings.ClearTasksKey.PressedOnce())
+				if (Settings.ClearTasksTransitionKey.PressedOnce())
 				{
 					_tasks = new List<TaskNode>();
+					var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
+					var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
+					if (dist < Settings.ClearPathDistance.Value)
+						_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
 				}
 
 				if (Settings.ToggleFollower.PressedOnce())
@@ -164,12 +167,12 @@ namespace SimpleFllw
 					{
 						//Leader moved VERY far in one frame. Check for transition to use to follow them.
 						var distanceMoved = Vector3.Distance(_lastTargetPosition, _followTarget.Pos);
-						if (_lastTargetPosition != Vector3.Zero && distanceMoved > Settings.ClearPathDistance.Value * 1.2)
+						if (_lastTargetPosition != Vector3.Zero && distanceMoved > Settings.ClearPathDistance.Value)
 						{
-							var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
+							/*var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
 							var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
 							if (dist < Settings.ClearPathDistance.Value)
-								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));*/
 						}
 						//We have no path, set us to go to leader pos.
 						else if (_tasks.Count == 0)
