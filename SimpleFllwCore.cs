@@ -32,6 +32,7 @@ namespace SimpleFllw
 		
 		private Vector3 _lastTargetPosition;
 		private Vector3 _lastPlayerPosition;
+		private Vector3 _targetPositionBeforeTransition;
 		private Entity _followTarget;
 
 		private bool _hasUsedWP = false;
@@ -123,8 +124,8 @@ namespace SimpleFllw
 				if (Settings.ClearTasksTransitionKey.PressedOnce())
 				{
 					_tasks = new List<TaskNode>();
-					var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
-					var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
+					var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_targetPositionBeforeTransition, I.Pos)).FirstOrDefault();
+					var dist = Vector3.Distance(_targetPositionBeforeTransition, transition.Pos);
 					if (dist < Settings.ClearPathDistance.Value)
 						_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
 				}
@@ -169,6 +170,7 @@ namespace SimpleFllw
 						var distanceMoved = Vector3.Distance(_lastTargetPosition, _followTarget.Pos);
 						if (_lastTargetPosition != Vector3.Zero && distanceMoved > Settings.ClearPathDistance.Value)
 						{
+							_targetPositionBeforeTransition = _lastTargetPosition;
 							/*var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).FirstOrDefault();
 							var dist = Vector3.Distance(_lastTargetPosition, transition.Pos);
 							if (dist < Settings.ClearPathDistance.Value)
