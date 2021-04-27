@@ -303,7 +303,7 @@ namespace SimpleFllw
 							}
 
 							// dashing if enabled and far from target
-							if (_followTarget != null && Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > _pathfindingDistance * 4)
+							if (_followTarget != null && Settings.IsDashEnabled && Vector3.Distance(_followTarget.Pos, GameController.Player.Pos) > _pathfindingDistance * 3.5)
 							{
 								Input.KeyDown(Settings.DashKey);
 								Thread.Sleep(random.Next(25) + 30);
