@@ -176,7 +176,7 @@ namespace SimpleFllw
 						}
 						//We have no path, set us to go to leader pos.
 						else if (_tasks.Count == 0)
-							_tasks.Add(new TaskNode(_followTarget.Pos, Settings.PathfindingNodeDistance));
+							//_tasks.Add(new TaskNode(_followTarget.Pos, Settings.PathfindingNodeDistance));
 						//We have a path. Check if the last task is far enough away from current one to add a new task node.
 						else
 						{
