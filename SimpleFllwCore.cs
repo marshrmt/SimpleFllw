@@ -75,6 +75,7 @@ namespace SimpleFllw
 
 		public override void AreaChange(AreaInstance area)
 		{
+			_followTarget = null;
 			ResetPathing();
 
 			//Load initial transitions!
@@ -158,7 +159,10 @@ namespace SimpleFllw
 				}
 
 				//Cache the current follow target (if present)
-				_followTarget = GetFollowingTarget();
+				if (_followTarget == null)
+				{
+					_followTarget = GetFollowingTarget();
+				}
 				if (_followTarget != null)
 				{
 					var distanceFromFollower = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
@@ -481,6 +485,7 @@ namespace SimpleFllw
 
 		private Entity GetFollowingTarget()
 		{
+			GameController.
 			var leaderName = Settings.LeaderName.Value.ToLower();
 			try
 			{
