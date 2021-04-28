@@ -286,7 +286,7 @@ namespace SimpleFllw
 					{
 						case TaskNodeType.Movement:
 
-							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > Settings.ClearPathDistance.Value)
+							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > Settings.ClearPathDistance.Value * 1.5)
 							{
 								Input.KeyUp(Settings.MovementKey);
 								break;
