@@ -289,6 +289,7 @@ namespace SimpleFllw
 							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > Settings.ClearPathDistance.Value * 1.5)
 							{
 								Input.KeyUp(Settings.MovementKey);
+								_tasks.RemoveAt(0);
 								break;
 							}
 
