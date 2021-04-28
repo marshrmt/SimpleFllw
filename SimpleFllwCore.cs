@@ -288,6 +288,7 @@ namespace SimpleFllw
 
 							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > _pathfindingDistance * 1.5)
 							{
+								Input.KeyUp(Settings.MovementKey);
 								break;
 							}
 
