@@ -56,6 +56,8 @@ namespace SimpleFllw
 
 			Input.RegisterKey(Settings.ClearTasksTransitionKey.Value);
 
+			_followTarget = null;
+
 			return base.Initialise();
 		}
 
