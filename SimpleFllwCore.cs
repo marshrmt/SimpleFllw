@@ -143,7 +143,7 @@ namespace SimpleFllw
 				}
 
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
-				var _dt = Settings.PathfindingNodeDistance.Value * 2.5;
+				var _dt = Settings.PathfindingNodeDistance.Value * 3;
 
 				foreach (var _t in _areaTransitions)
 				{
@@ -151,7 +151,7 @@ namespace SimpleFllw
 					{
 						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance = (int) ((float) _pathfindingDistance * 2.5);
+							_pathfindingDistance = (int) ((float) _pathfindingDistance * 3);
 							break;
 						}
 					}
@@ -462,7 +462,7 @@ namespace SimpleFllw
 					{
 						var recheckDistance = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 
-						if (recheckDistance <= _pathfindingDistance)
+						if (recheckDistance <= _pathfindingDistance * 1.3)
 						{
 							Input.KeyUp(Settings.MovementKey);
 						}
