@@ -485,7 +485,6 @@ namespace SimpleFllw
 
 		private Entity GetFollowingTarget()
 		{
-			GameController.
 			var leaderName = Settings.LeaderName.Value.ToLower();
 			try
 			{
