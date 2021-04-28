@@ -548,6 +548,13 @@ namespace SimpleFllw
 				//TODO: Handle waypoint (initial claim as well as using to teleport somewhere)
 
 				//Handle clickable teleporters
+				case ExileCore.Shared.Enums.EntityType.Player:
+					var leaderName = Settings.LeaderName.Value.ToLower();
+					if (entity.GetComponent<Player>().PlayerName.ToLower() == leaderName)
+					{
+						_followTarget = null;
+					}
+					break;
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
 				case ExileCore.Shared.Enums.EntityType.TownPortal:
