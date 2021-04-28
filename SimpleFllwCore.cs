@@ -285,12 +285,13 @@ namespace SimpleFllw
 					switch (currentTask.Type)
 					{
 						case TaskNodeType.Movement:
-							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency + random.Next(Settings.BotInputFrequency));
 
 							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > _pathfindingDistance * 1.5)
 							{
 								break;
 							}
+
+							_nextBotAction = DateTime.Now.AddMilliseconds(Settings.BotInputFrequency + random.Next(Settings.BotInputFrequency));
 
 							Vector3 direction;
 							Vector3 normal;
