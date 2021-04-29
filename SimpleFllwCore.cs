@@ -156,28 +156,26 @@ namespace SimpleFllw
 						}
 					}
 
-					if (transOptions.Length > 0)
+					if (transOptions.Length > 0 && _portalsCount >= 4)
 					{
-						if (_portalsCount >= 4)
+						int transNumber = 0;
+
+						transNumber = Settings.SlotNumber + 1;
+
+						if (transNumber >= transOptions.Length)
 						{
-							int transNumber = 0;
-
-							transNumber = Settings.SlotNumber + 1;
-
-							if (transNumber >= transOptions.Length)
-							{
-								transNumber = transOptions.Length - 1;
-							}
-
-							_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
+							transNumber = transOptions.Length - 1;
 						}
-						else
-						{
-							var transition = transOptions.FirstOrDefault();
-							var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
-							if (dist < Settings.ClearPathDistance.Value)
-								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
-						}
+
+						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
+
+					}
+					else
+					{
+						var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(GameController.Player.Pos, I.Pos)).FirstOrDefault();
+						var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
+						if (dist < Settings.ClearPathDistance.Value)
+							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
 					}
 				}
 
