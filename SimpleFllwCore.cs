@@ -115,27 +115,18 @@ namespace SimpleFllw
 		{
 			try
 			{
+				if (Settings.ToggleFollower.PressedOnce())
+				{
+					Settings.IsFollowEnabled.SetValueNoEvent(!Settings.IsFollowEnabled.Value);
+					_tasks = new List<TaskNode>();
+				}
+
 				//Dont run logic if we're dead!
 				if (!GameController.Player.IsAlive)
 				{
 					Input.KeyUp(Settings.MovementKey);
 					Input.KeyUp(Settings.DashKey);
 					return null;
-				}
-
-				if (Settings.ClearTasksTransitionKey.PressedOnce())
-				{
-					_tasks = new List<TaskNode>();
-					var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(GameController.Player.Pos, I.Pos)).FirstOrDefault();
-					var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
-					if (dist < Settings.ClearPathDistance.Value)
-						_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
-				}
-
-				if (Settings.ToggleFollower.PressedOnce())
-				{
-					Settings.IsFollowEnabled.SetValueNoEvent(!Settings.IsFollowEnabled.Value);
-					_tasks = new List<TaskNode>();
 				}
 
 				if (!Settings.IsFollowEnabled.Value)
@@ -147,6 +138,48 @@ namespace SimpleFllw
 
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
 				var _dt = Settings.PathfindingNodeDistance.Value * 3;
+
+				if (Settings.ClearTasksTransitionKey.PressedOnce())
+				{
+					_tasks = new List<TaskNode>();
+
+					var transOptions = _areaTransitions.Values.
+						Where(I => Vector3.Distance(_lastTargetPosition, I.Pos) < Settings.ClearPathDistance).
+						OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
+					var _portalsCount = 0;
+
+					foreach (Entity _to in transOptions)
+					{
+						if (_to.Type == ExileCore.Shared.Enums.EntityType.Portal)
+						{
+							_portalsCount++;
+						}
+					}
+
+					if (transOptions.Length > 0)
+					{
+						if (_portalsCount >= 4)
+						{
+							int transNumber = 0;
+
+							transNumber = Settings.SlotNumber + 1;
+
+							if (transNumber >= transOptions.Length)
+							{
+								transNumber = transOptions.Length - 1;
+							}
+
+							_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
+						}
+						else
+						{
+							var transition = transOptions.FirstOrDefault();
+							var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
+							if (dist < Settings.ClearPathDistance.Value)
+								_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+						}
+					}
+				}
 
 				foreach (var _t in _areaTransitions)
 				{
@@ -238,7 +271,8 @@ namespace SimpleFllw
 				else if (_tasks.Count == 0 &&
 					_lastTargetPosition != Vector3.Zero)
 				{
-
+					// dont auto use portal (happens randomly on laggy map
+					/*
 					var transOptions = _areaTransitions.Values.
 						Where(I => Vector3.Distance(_lastTargetPosition, I.Pos) < Settings.ClearPathDistance).
 						OrderBy(I => Vector3.Distance(_lastTargetPosition, I.Pos)).ToArray();
@@ -257,7 +291,7 @@ namespace SimpleFllw
 
 						}
 						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
-					}
+					}*/
 				}
 
 				//Don't run tasks if looting
@@ -551,11 +585,7 @@ namespace SimpleFllw
 
 				//Handle clickable teleporters
 				case ExileCore.Shared.Enums.EntityType.Player:
-					var leaderName = Settings.LeaderName.Value.ToLower();
-					//if (entity.GetComponent<Player>().PlayerName.ToLower() == leaderName)
-					//{
-						_followTarget = null;
-					//}
+					_followTarget = null;
 					break;
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
