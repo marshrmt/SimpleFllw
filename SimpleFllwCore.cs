@@ -150,7 +150,7 @@ namespace SimpleFllw
 
 					foreach (Entity _to in transOptions)
 					{
-						if (_to.Type == ExileCore.Shared.Enums.EntityType.Portal)
+						if (_to.Type == ExileCore.Shared.Enums.EntityType.Portal || _to.Type == ExileCore.Shared.Enums.EntityType.TownPortal)
 						{
 							_portalsCount++;
 						}
