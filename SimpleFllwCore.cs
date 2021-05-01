@@ -32,7 +32,7 @@ namespace SimpleFllw
 		
 		private Vector3 _lastTargetPosition;
 		private Vector3 _lastPlayerPosition;
-		private Entity _followTarget;
+		private volatile Entity _followTarget;
 
 		private bool _hasUsedWP = false;
 
@@ -119,6 +119,17 @@ namespace SimpleFllw
 				{
 					Settings.IsFollowEnabled.SetValueNoEvent(!Settings.IsFollowEnabled.Value);
 					_tasks = new List<TaskNode>();
+				}
+
+				// Dont run logic if ultimatum panel is visible
+				int ultimatumPanelIndex = 93;
+				IngameUIElements igu = GameController?.Game?.IngameState?.IngameUi;
+
+				if (igu?.Children != null && igu.Children.Count > ultimatumPanelIndex && igu.Children[ultimatumPanelIndex].IsVisible)
+				{
+					Input.KeyUp(Settings.MovementKey);
+					Input.KeyUp(Settings.DashKey);
+					return null;
 				}
 
 				//Dont run logic if we're dead!
