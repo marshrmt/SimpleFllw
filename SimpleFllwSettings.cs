@@ -28,5 +28,6 @@ namespace SimpleFllw
 		[Menu("Loot Quest Items")] public ToggleNode IsLootQuestItemsEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Auto Pick Up Waypoint")] public ToggleNode IsAutoPickUpWaypointEnabled { get; set; } = new ToggleNode(true);
 		[Menu("Clear Tasks + Make Transition")] public HotkeyNode ClearTasksTransitionKey { get; set; } = Keys.P;
+		[Menu("Phase Run Key")] public HotkeyNode PhaseRunKey { get; set; } = Keys.U;
 	}
 }

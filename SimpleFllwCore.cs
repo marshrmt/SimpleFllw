@@ -446,10 +446,10 @@ namespace SimpleFllw
 
 									if (currentTask.AttemptCount == 0)
 									{
-										// Use quartz flask (slot 4) just incase
-										Input.KeyDown(System.Windows.Forms.Keys.D4);
+										// Use Phase run
+										Input.KeyDown(Settings.PhaseRunKey);
 										Thread.Sleep(random.Next(25) + 30);
-										Input.KeyUp(System.Windows.Forms.Keys.D4);
+										Input.KeyUp(Settings.PhaseRunKey);
 									}
 
 									//Click the transition
