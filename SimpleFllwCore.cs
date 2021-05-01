@@ -594,6 +594,7 @@ namespace SimpleFllw
 
 				//Handle clickable teleporters
 				case ExileCore.Shared.Enums.EntityType.Player:
+					LogMessage("player removed: " + entity.GetComponent<Player>().PlayerName.ToLower());
 					_followTarget = null;
 					break;
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
