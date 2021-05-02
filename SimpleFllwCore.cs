@@ -203,10 +203,8 @@ namespace SimpleFllw
 				}
 
 				//Cache the current follow target (if present)
-				if (_followTarget == null)
-				{
-					_followTarget = GetFollowingTarget();
-				}
+				
+				_followTarget = GetFollowingTarget();
 				if (_followTarget != null)
 				{
 					var distanceFromFollower = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
@@ -533,9 +531,12 @@ namespace SimpleFllw
 			var leaderName = Settings.LeaderName.Value.ToLower();
 			try
 			{
-				return GameController.Entities
-					.Where(x => x.Type == ExileCore.Shared.Enums.EntityType.Player)
-					.FirstOrDefault(x => x.GetComponent<Player>().PlayerName.ToLower() == leaderName);
+				if (!GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Player, out List<Entity> players))
+				{
+					return null;
+				}
+
+				return players.FirstOrDefault(x => x.GetComponent<Player>().PlayerName.ToLower() == leaderName);
 			}
 			// Sometimes we can get "Collection was modified; enumeration operation may not execute" exception
 			catch
@@ -593,13 +594,14 @@ namespace SimpleFllw
 				//TODO: Handle waypoint (initial claim as well as using to teleport somewhere)
 
 				//Handle clickable teleporters
-				case ExileCore.Shared.Enums.EntityType.Player:
+				/*case ExileCore.Shared.Enums.EntityType.Player:
 					//LogMessage("player removed: " + entity.GetComponent<Player>().PlayerName.ToLower());
 					//if (entity.GetComponent<Player>().PlayerName == null || entity.GetComponent<Player>().PlayerName == "")
 					//{
 						_followTarget = null;
 					//}
 					break;
+				*/
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
 				case ExileCore.Shared.Enums.EntityType.TownPortal:
