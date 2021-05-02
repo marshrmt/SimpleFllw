@@ -121,6 +121,16 @@ namespace SimpleFllw
 					_tasks = new List<TaskNode>();
 				}
 
+				// Close ritual window if opened
+				if (GameController.Game.IngameState.IngameUi.RitualWindow.IsVisible)
+				{
+					Input.KeyUp(System.Windows.Forms.Keys.V);
+					Thread.Sleep(random.Next(25) + 30);
+					Input.KeyDown(System.Windows.Forms.Keys.V);
+					Thread.Sleep(random.Next(25) + 30);
+					Input.KeyUp(System.Windows.Forms.Keys.V);
+				}
+
 				// Dont run logic if ultimatum panel is visible
 				int ultimatumPanelIndex = 93;
 				IngameUIElements igu = GameController?.Game?.IngameState?.IngameUi;
