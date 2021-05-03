@@ -213,7 +213,6 @@ namespace SimpleFllw
 				}
 
 				//Cache the current follow target (if present)
-				
 				_followTarget = GetFollowingTarget();
 				if (_followTarget != null)
 				{
@@ -541,6 +540,20 @@ namespace SimpleFllw
 			var leaderName = Settings.LeaderName.Value.ToLower();
 			try
 			{
+				var nearest = GameController.IngameState.ServerData.NearestPlayers;
+
+				if (nearest != null)
+				{
+					foreach (var near in nearest)
+					{
+						if (near?.Owner?.GetComponent<Player>().PlayerName.ToLower() == leaderName)
+						{
+							LogMessage("found nearest");
+							return near?.Owner;
+						}
+					}
+				}
+
 				if (!GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Player, out List<Entity> players))
 				{
 					return null;
