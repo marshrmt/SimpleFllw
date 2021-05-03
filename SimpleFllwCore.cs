@@ -157,16 +157,6 @@ namespace SimpleFllw
 					return null;
 				}
 
-				// Close chat if opened (only if follow enabled)
-				if (GameController.Game.IngameState.IngameUi.ChatBoxRoot.IsVisible)
-				{
-					Input.KeyUp(System.Windows.Forms.Keys.Escape);
-					Thread.Sleep(random.Next(25) + 30);
-					Input.KeyDown(System.Windows.Forms.Keys.Escape);
-					Thread.Sleep(random.Next(25) + 30);
-					Input.KeyUp(System.Windows.Forms.Keys.Escape);
-				}
-
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
 				var _dt = Settings.PathfindingNodeDistance.Value * 3;
 
