@@ -157,6 +157,16 @@ namespace SimpleFllw
 					return null;
 				}
 
+				// Close chat if opened (only if follow enabled)
+				if (GameController.Game.IngameState.IngameUi.ChatBox.IsVisible)
+				{
+					Input.KeyUp(System.Windows.Forms.Keys.Escape);
+					Thread.Sleep(random.Next(25) + 30);
+					Input.KeyDown(System.Windows.Forms.Keys.Escape);
+					Thread.Sleep(random.Next(25) + 30);
+					Input.KeyUp(System.Windows.Forms.Keys.Escape);
+				}
+
 				var _pathfindingDistance = Settings.PathfindingNodeDistance.Value;
 				var _dt = Settings.PathfindingNodeDistance.Value * 3;
 
@@ -665,7 +675,7 @@ namespace SimpleFllw
 			var screenPos = Camera.WorldToScreen(worldPos);
 			var result = screenPos + windowRect.Location;
 
-			var edgeBounds = 150;
+			var edgeBounds = 250;
 			if (!windowRect.Intersects(new SharpDX.RectangleF(result.X, result.Y, edgeBounds, edgeBounds)))
 			{
 				//Adjust for offscreen entity. Need to clamp the screen position using the game window info. 
