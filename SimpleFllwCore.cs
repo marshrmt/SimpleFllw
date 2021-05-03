@@ -548,7 +548,6 @@ namespace SimpleFllw
 					{
 						if (near?.Owner?.GetComponent<Player>().PlayerName.ToLower() == leaderName)
 						{
-							LogMessage("found nearest");
 							return near?.Owner;
 						}
 					}
