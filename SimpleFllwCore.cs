@@ -158,7 +158,7 @@ namespace SimpleFllw
 				}
 
 				// Close chat if opened (only if follow enabled)
-				if (GameController.Game.IngameState.IngameUi.ChatBox.IsVisible)
+				if (GameController.Game.IngameState.IngameUi.ChatBoxRoot.IsVisible)
 				{
 					Input.KeyUp(System.Windows.Forms.Keys.Escape);
 					Thread.Sleep(random.Next(25) + 30);
