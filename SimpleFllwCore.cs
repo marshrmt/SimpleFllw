@@ -13,6 +13,7 @@ using EpPathFinding.cs;
 using System.Linq;
 using System.IO;
 using System.Threading;
+using System.Collections.Concurrent;
 using System.Drawing;
 
 namespace SimpleFllw
@@ -89,9 +90,25 @@ namespace SimpleFllw
 		{
 			_areaTransitions = new Dictionary<uint, Entity>();
 
-			foreach (var transition in GameController.EntityListWrapper.Entities.Where(I => I.Type == ExileCore.Shared.Enums.EntityType.AreaTransition ||
-			 I.Type == ExileCore.Shared.Enums.EntityType.Portal ||
-			 I.Type == ExileCore.Shared.Enums.EntityType.TownPortal).ToList())
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.AreaTransition, out ConcurrentBag<Entity> areaTransitions))
+			{
+				ResetTransitionsHelper(areaTransitions);
+			}
+
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Portal, out ConcurrentBag<Entity> portals))
+			{
+				ResetTransitionsHelper(portals);
+			}
+
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.TownPortal, out ConcurrentBag<Entity> townPortals))
+			{
+				ResetTransitionsHelper(townPortals);
+			}
+		}
+
+		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
+		{
+			foreach (var transition in transitions)
 			{
 				if (!_areaTransitions.ContainsKey(transition.Id))
 					_areaTransitions.Add(transition.Id, transition);
@@ -132,6 +149,9 @@ namespace SimpleFllw
 				}
 
 				// Dont run logic if ultimatum panel is visible
+				// turn off for now
+
+				/*
 				int ultimatumPanelIndex = 93;
 				IngameUIElements igu = GameController?.Game?.IngameState?.IngameUi;
 
@@ -140,7 +160,8 @@ namespace SimpleFllw
 					Input.KeyUp(Settings.MovementKey);
 					Input.KeyUp(Settings.DashKey);
 					return null;
-				}
+				} 
+				*/
 
 				//Dont run logic if we're dead!
 				if (!GameController.Player.IsAlive)
@@ -268,8 +289,13 @@ namespace SimpleFllw
 						else if (Settings.IsAutoPickUpWaypointEnabled && !_hasUsedWP)
 						{
 							//Check if there's a waypoint nearby
-							var waypoint = GameController.EntityListWrapper.Entities.SingleOrDefault(I => I.Type == ExileCore.Shared.Enums.EntityType.Waypoint &&
-								Vector3.Distance(GameController.Player.Pos, I.Pos) < Settings.ClearPathDistance);
+							Entity waypoint = null;
+
+							if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Waypoint, out ConcurrentBag<Entity> waypoints))
+							{
+								waypoint = waypoints.SingleOrDefault(I => Vector3.Distance(GameController.Player.Pos, I.Pos) < Settings.ClearPathDistance);
+							}
+							
 
 							if (waypoint != null)
 							{
@@ -553,7 +579,7 @@ namespace SimpleFllw
 					}
 				}
 
-				if (!GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Player, out List<Entity> players))
+				if (!GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Player, out ConcurrentBag<Entity> players))
 				{
 					return null;
 				}
@@ -571,8 +597,12 @@ namespace SimpleFllw
 		{
 			try
 			{
-				return GameController.EntityListWrapper.Entities
-					.Where(e => e.Type == ExileCore.Shared.Enums.EntityType.WorldItem)
+				if (!GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.WorldItem, out ConcurrentBag<Entity> worldItems))
+				{
+					return null;
+				}
+
+				return worldItems
 					.Where(e => e.IsTargetable)
 					.Where(e => e.GetComponent<WorldItem>() != null)
 					.FirstOrDefault(e =>
