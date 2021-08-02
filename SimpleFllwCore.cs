@@ -183,6 +183,7 @@ namespace SimpleFllw
 
 				if (Settings.ClearTasksTransitionKey.PressedOnce())
 				{
+					LogMessage(" >> transition key pressed !");
 					_tasks = new List<TaskNode>();
 
 					var transOptions = _areaTransitions.Values.
