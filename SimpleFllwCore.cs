@@ -185,6 +185,7 @@ namespace SimpleFllw
 				{
 					//LogMessage(" >> transition key pressed !");
 					ResetTransitions();
+					LogMessage(" >> transitions: " + _areaTransitions.Count);
 
 					_tasks = new List<TaskNode>();
 
