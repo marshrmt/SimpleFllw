@@ -391,6 +391,11 @@ namespace SimpleFllw
 					switch (currentTask.Type)
 					{
 						case TaskNodeType.Movement:
+							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHub"))
+							{
+								Input.KeyUp(Settings.MovementKey);
+								return null;
+							}
 
 							if (Vector3.Distance(currentTask.WorldPosition, GameController.Player.Pos) > Settings.ClearPathDistance.Value * 1.5)
 							{
