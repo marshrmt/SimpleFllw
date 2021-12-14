@@ -124,9 +124,14 @@ namespace SimpleFllw
 		{
 			foreach (var transition in transitions)
 			{
-				if (!_areaTransitions.ContainsKey(transition.Id) && transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
-					&& transition.IsTargetable)
+				if (!_areaTransitions.ContainsKey(transition.Id) && transition.IsTargetable)
+				{
+					if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+						|| transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"
+						|| transition.Metadata == "Metadata/MiscellaneousObjects/AreaTransition")
 					_areaTransitions.Add(transition.Id, transition);
+				}
+					
 			}
 		}
 
