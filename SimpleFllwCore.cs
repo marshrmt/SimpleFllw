@@ -104,6 +104,8 @@ namespace SimpleFllw
 			{
 				ResetTransitionsHelper(townPortals);
 			}
+
+			//GameController.EntityListWrapper.OnlyValidEntities
 		}
 
 		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
@@ -185,7 +187,7 @@ namespace SimpleFllw
 				{
 					//LogMessage(" >> transition key pressed !");
 					ResetTransitions();
-					LogMessage(" >> transitions: " + _areaTransitions.Count);
+					//LogMessage(" >> transitions: " + _areaTransitions.Count);
 
 					_tasks = new List<TaskNode>();
 
@@ -623,7 +625,10 @@ namespace SimpleFllw
 		}
 		public override void EntityAdded(Entity entity)
 		{
+			bool defaultTransition = false;
+
 			if (!string.IsNullOrEmpty(entity.RenderName))
+			{
 				switch (entity.Type)
 				{
 					//TODO: Handle doors and similar obstructions to movement/pathfinding
@@ -634,37 +639,45 @@ namespace SimpleFllw
 					case ExileCore.Shared.Enums.EntityType.AreaTransition:
 					case ExileCore.Shared.Enums.EntityType.Portal:
 					case ExileCore.Shared.Enums.EntityType.TownPortal:
+						defaultTransition = true;
 						if (!_areaTransitions.ContainsKey(entity.Id))
 							_areaTransitions.Add(entity.Id, entity);
 						break;
 				}
+			}
+
+			if (!defaultTransition && entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal")
+			{
+				LogMessage($"heist portal type: {entity.Type}");
+				if(!_areaTransitions.ContainsKey(entity.Id))
+					_areaTransitions.Add(entity.Id, entity);
+			}
+
 			base.EntityAdded(entity);
 		}
 
 		public override void EntityRemoved(Entity entity)
 		{
+			bool defaultTransition = false;
+
 			switch (entity.Type)
 			{
-				//TODO: Handle doors and similar obstructions to movement/pathfinding
-
-				//TODO: Handle waypoint (initial claim as well as using to teleport somewhere)
-
-				//Handle clickable teleporters
-				/*case ExileCore.Shared.Enums.EntityType.Player:
-					//LogMessage("player removed: " + entity.GetComponent<Player>().PlayerName.ToLower());
-					//if (entity.GetComponent<Player>().PlayerName == null || entity.GetComponent<Player>().PlayerName == "")
-					//{
-						_followTarget = null;
-					//}
-					break;
-				*/
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
 				case ExileCore.Shared.Enums.EntityType.TownPortal:
+					defaultTransition = true;
+
 					if (_areaTransitions.ContainsKey(entity.Id))
 						_areaTransitions.Remove(entity.Id);
 					break;
 			}
+
+			if (!defaultTransition && entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal")
+			{
+				if (!_areaTransitions.ContainsKey(entity.Id))
+					_areaTransitions.Remove(entity.Id);
+			}
+
 			base.EntityRemoved(entity);
 		}
 
