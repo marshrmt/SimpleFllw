@@ -105,7 +105,10 @@ namespace SimpleFllw
 				ResetTransitionsHelper(townPortals);
 			}
 
-			//GameController.EntityListWrapper.OnlyValidEntities
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
+			{
+				ResetTransitionHeistHelper(ingameIcons);
+			}
 		}
 
 		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
@@ -113,6 +116,16 @@ namespace SimpleFllw
 			foreach (var transition in transitions)
 			{
 				if (!_areaTransitions.ContainsKey(transition.Id))
+					_areaTransitions.Add(transition.Id, transition);
+			}
+		}
+
+		private void ResetTransitionHeistHelper(ConcurrentBag<Entity> transitions)
+		{
+			foreach (var transition in transitions)
+			{
+				if (!_areaTransitions.ContainsKey(transition.Id) && transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+					&& transition.IsTargetable)
 					_areaTransitions.Add(transition.Id, transition);
 			}
 		}
@@ -648,7 +661,6 @@ namespace SimpleFllw
 
 			if (!defaultTransition && entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal")
 			{
-				LogMessage($"heist portal type: {entity.Type}");
 				if(!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Add(entity.Id, entity);
 			}
