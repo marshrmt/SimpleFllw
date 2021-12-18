@@ -513,7 +513,7 @@ namespace SimpleFllw
 
 									if (currentTask.HeistExit)
 									{
-										zOffset = -200;
+										zOffset = -250;
 									}
 
 									if (currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
