@@ -499,11 +499,11 @@ namespace SimpleFllw
 								}
 								else
 								{
-									var zOffset = -100;
+									var zOffset = -40;
 
 									if (currentTask.AttemptCount <= 3)
 									{
-										zOffset = -100 + currentTask.AttemptCount * -40;
+										zOffset = currentTask.AttemptCount * -65;
 									}
 
 									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, zOffset);
