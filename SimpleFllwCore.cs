@@ -203,7 +203,6 @@ namespace SimpleFllw
 
 				if (Settings.ClearTasksTransitionKey.PressedOnce())
 				{
-					LogMessage($"{GameController.Area.CurrentArea.Area.RawName} (rawname)");
 					//LogMessage(" >> transition key pressed !");
 					ResetTransitions();
 					//LogMessage(" >> transitions: " + _areaTransitions.Count);
@@ -406,7 +405,7 @@ namespace SimpleFllw
 					switch (currentTask.Type)
 					{
 						case TaskNodeType.Movement:
-							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHub"))
+							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
 							{
 								Input.KeyUp(Settings.MovementKey);
 								return null;
