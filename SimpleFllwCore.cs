@@ -203,6 +203,7 @@ namespace SimpleFllw
 
 				if (Settings.ClearTasksTransitionKey.PressedOnce())
 				{
+					LogMessage($"{GameController.Area.CurrentArea.Area.RawName} (rawname)");
 					//LogMessage(" >> transition key pressed !");
 					ResetTransitions();
 					//LogMessage(" >> transitions: " + _areaTransitions.Count);
