@@ -511,12 +511,12 @@ namespace SimpleFllw
 								{
 									var zOffset = -40;
 
-									if (currentTask.HeistExit || true)
+									if (currentTask.HeistExit)
 									{
 										zOffset = -270;
 									}
 
-									if (false && currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
+									if (currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
 									{
 										zOffset = currentTask.AttemptCount * -55;
 									}
