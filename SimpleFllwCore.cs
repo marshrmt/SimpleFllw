@@ -499,7 +499,7 @@ namespace SimpleFllw
 								}
 								else
 								{
-									var zOffset = 40;
+									var zOffset = -50;
 
 									if (currentTask.AttemptCount <= 3)
 									{
