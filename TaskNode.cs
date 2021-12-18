@@ -28,13 +28,15 @@ namespace SimpleFllw
         /// </summary>
         public int AttemptCount { get; set; }
 
+        public bool HeistExit { get; set; }
 
 
-        public TaskNode(Vector3 position, int bounds, TaskNodeType type = TaskNodeType.Movement)
+        public TaskNode(Vector3 position, int bounds, TaskNodeType type = TaskNodeType.Movement, bool heistExit = false)
         {
             WorldPosition = position;
             Type = type;
             Bounds = bounds;
+            HeistExit = heistExit;
         }
     }
 }

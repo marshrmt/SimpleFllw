@@ -233,8 +233,13 @@ namespace SimpleFllw
 							transNumber = transOptions.Length - 1;
 						}
 
+						bool heistExit = false;
 						Thread.Sleep(700 * Settings.SlotNumber);
-						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
+						if (transOptions[transNumber].Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
+						{
+							heistExit = true;
+						}
+						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition, heistExit));
 
 					}
 					else
@@ -243,8 +248,13 @@ namespace SimpleFllw
 						var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
 						if (dist < Settings.ClearPathDistance.Value)
 						{
+							bool heistExit = false;
 							Thread.Sleep(700 * Settings.SlotNumber);
-							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+							if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
+							{
+								heistExit = true;
+							}
+							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition, heistExit));
 						}
 					}
 				}
@@ -501,9 +511,14 @@ namespace SimpleFllw
 								{
 									var zOffset = -40;
 
-									if (currentTask.AttemptCount <= 3)
+									if (currentTask.HeistExit)
 									{
-										zOffset = currentTask.AttemptCount * -65;
+										zOffset = -200;
+									}
+
+									if (currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
+									{
+										zOffset = currentTask.AttemptCount * -55;
 									}
 
 									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, zOffset);
