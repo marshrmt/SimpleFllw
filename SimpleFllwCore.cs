@@ -511,12 +511,12 @@ namespace SimpleFllw
 								{
 									var zOffset = -40;
 
-									if (currentTask.HeistExit)
+									if (currentTask.HeistExit || true)
 									{
 										zOffset = -270;
 									}
 
-									if (currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
+									if (false && currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
 									{
 										zOffset = currentTask.AttemptCount * -55;
 									}
@@ -614,7 +614,7 @@ namespace SimpleFllw
 			var leaderName = Settings.LeaderName.Value.ToLower();
 			try
 			{
-				var nearest = GameController.IngameState.ServerData.NearestPlayers;
+				var nearest = GameController.IngameState.Data.ServerData.NearestPlayers;
 
 				if (nearest != null)
 				{
