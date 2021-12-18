@@ -669,7 +669,8 @@ namespace SimpleFllw
 				}
 			}
 
-			if (!defaultTransition && entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal")
+			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if(!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Add(entity.Id, entity);
@@ -694,7 +695,8 @@ namespace SimpleFllw
 					break;
 			}
 
-			if (!defaultTransition && entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal")
+			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if (!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Remove(entity.Id);
