@@ -233,6 +233,7 @@ namespace SimpleFllw
 							transNumber = transOptions.Length - 1;
 						}
 
+						Thread.Sleep(700 * Settings.SlotNumber);
 						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition));
 
 					}
@@ -241,7 +242,10 @@ namespace SimpleFllw
 						var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(GameController.Player.Pos, I.Pos)).FirstOrDefault();
 						var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
 						if (dist < Settings.ClearPathDistance.Value)
+						{
+							Thread.Sleep(700 * Settings.SlotNumber);
 							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition));
+						}
 					}
 				}
 
