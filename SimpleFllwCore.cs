@@ -234,7 +234,7 @@ namespace SimpleFllw
 						}
 
 						bool heistExit = false;
-						Thread.Sleep(700 * Settings.SlotNumber);
+						//Thread.Sleep(700 * Settings.SlotNumber);
 						if (transOptions[transNumber].Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
 						{
 							heistExit = true;
@@ -249,7 +249,7 @@ namespace SimpleFllw
 						if (dist < Settings.ClearPathDistance.Value)
 						{
 							bool heistExit = false;
-							Thread.Sleep(700 * Settings.SlotNumber);
+							//Thread.Sleep(700 * Settings.SlotNumber);
 							if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
 							{
 								heistExit = true;
