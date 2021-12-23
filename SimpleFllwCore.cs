@@ -251,7 +251,7 @@ namespace SimpleFllw
 							bool heistExit = false;
 							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
 							{
-								int sleepRnd = random.Next(0,900);
+								int sleepRnd = random.Next(0,2500);
 								Thread.Sleep(sleepRnd);
 							}
 							if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
