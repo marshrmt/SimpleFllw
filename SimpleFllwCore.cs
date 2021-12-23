@@ -249,7 +249,10 @@ namespace SimpleFllw
 						if (dist < Settings.ClearPathDistance.Value)
 						{
 							bool heistExit = false;
-							//Thread.Sleep(700 * Settings.SlotNumber);
+							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
+							{
+								Thread.Sleep(800 * Settings.SlotNumber);
+							}
 							if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
 							{
 								heistExit = true;
