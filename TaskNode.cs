@@ -28,15 +28,22 @@ namespace SimpleFllw
         /// </summary>
         public int AttemptCount { get; set; }
 
-        public bool HeistExit { get; set; }
+        public Vector3 Size { get; set; }
+
+        public bool ContainsSize { get; private set; } = false;
 
 
-        public TaskNode(Vector3 position, int bounds, TaskNodeType type = TaskNodeType.Movement, bool heistExit = false)
+        public TaskNode(Vector3 position, int bounds, TaskNodeType type = TaskNodeType.Movement)
         {
             WorldPosition = position;
             Type = type;
             Bounds = bounds;
-            HeistExit = heistExit;
+        }
+
+        public TaskNode(Vector3 position, int bounds, TaskNodeType type, Vector3 size) : this (position, bounds, type)
+        {
+            Size = size;
+            ContainsSize = true;
         }
     }
 }

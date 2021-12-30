@@ -105,10 +105,10 @@ namespace SimpleFllw
 				ResetTransitionsHelper(townPortals);
 			}
 
-			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
+			/*if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
 			{
 				ResetTransitionHeistHelper(ingameIcons);
-			}
+			}*/
 		}
 
 		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
@@ -233,32 +233,31 @@ namespace SimpleFllw
 							transNumber = transOptions.Length - 1;
 						}
 
-						bool heistExit = false;
-						//Thread.Sleep(700 * Settings.SlotNumber);
-						if (transOptions[transNumber].Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
-						{
-							heistExit = true;
-						}
-						_tasks.Add(new TaskNode(transOptions[transNumber].Pos, _pathfindingDistance, TaskNodeType.Transition, heistExit));
+						var tr = transOptions[transNumber];
 
+						if (tr.HasComponent<Render>())
+						{
+							_tasks.Add(new TaskNode(tr.Pos, _pathfindingDistance, TaskNodeType.Transition, tr.GetComponent<Render>().Bounds));
+						}
+						else
+						{
+							_tasks.Add(new TaskNode(tr.Pos, _pathfindingDistance, TaskNodeType.Transition));
+						}
 					}
 					else
 					{
-						var transition = _areaTransitions.Values.OrderBy(I => Vector3.Distance(GameController.Player.Pos, I.Pos)).FirstOrDefault();
-						var dist = Vector3.Distance(GameController.Player.Pos, transition.Pos);
+						var tr = _areaTransitions.Values.OrderBy(I => Vector3.Distance(GameController.Player.Pos, I.Pos)).FirstOrDefault();
+						var dist = Vector3.Distance(GameController.Player.Pos, tr.Pos);
 						if (dist < Settings.ClearPathDistance.Value)
 						{
-							bool heistExit = false;
-							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
+							if (tr.HasComponent<Render>())
 							{
-								int sleepRnd = random.Next(Settings.SlotNumber * 500, Settings.SlotNumber * 850);
-								Thread.Sleep(sleepRnd);
+								_tasks.Add(new TaskNode(tr.Pos, 200, TaskNodeType.Transition, tr.GetComponent<Render>().Bounds));
 							}
-							if (transition.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
+							else
 							{
-								heistExit = true;
+								_tasks.Add(new TaskNode(tr.Pos, 200, TaskNodeType.Transition));
 							}
-							_tasks.Add(new TaskNode(transition.Pos, 200, TaskNodeType.Transition, heistExit));
 						}
 					}
 				}
@@ -513,7 +512,7 @@ namespace SimpleFllw
 								}
 								else
 								{
-									var zOffset = -40;
+									/*var zOffset = -40;
 
 									if (currentTask.HeistExit)
 									{
@@ -523,9 +522,26 @@ namespace SimpleFllw
 									if (currentTask.AttemptCount <= 3 && !currentTask.HeistExit)
 									{
 										zOffset = currentTask.AttemptCount * -55;
+									}*/
+
+									var offset = new Vector3(0, 0, 0);
+
+									if (currentTask.ContainsSize)
+									{
+										// horizontal transition
+										if (currentTask.Size.Z < 5)
+										{
+											offset.X = (currentTask.Size.X / 2 - 10);
+											offset.Y = (currentTask.Size.Y / 2 - 10);
+										}
+										// vertical transition
+										else
+										{
+											offset.Z = -(currentTask.Size.Z / 2 - 10);
+										}
 									}
 
-									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, zOffset);
+									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, offset);
 									
 									Input.KeyUp(Settings.MovementKey);
 
@@ -671,7 +687,7 @@ namespace SimpleFllw
 		}
 		public override void EntityAdded(Entity entity)
 		{
-			bool defaultTransition = false;
+			//bool defaultTransition = false;
 
 			if (!string.IsNullOrEmpty(entity.RenderName))
 			{
@@ -685,45 +701,46 @@ namespace SimpleFllw
 					case ExileCore.Shared.Enums.EntityType.AreaTransition:
 					case ExileCore.Shared.Enums.EntityType.Portal:
 					case ExileCore.Shared.Enums.EntityType.TownPortal:
-						defaultTransition = true;
+						//defaultTransition = true;
 						if (!_areaTransitions.ContainsKey(entity.Id))
 							_areaTransitions.Add(entity.Id, entity);
 						break;
 				}
 			}
 
-			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+			/*if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
 				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if(!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Add(entity.Id, entity);
-			}
+			}*/
 
 			base.EntityAdded(entity);
 		}
 
 		public override void EntityRemoved(Entity entity)
 		{
-			bool defaultTransition = false;
+			//bool defaultTransition = false;
 
 			switch (entity.Type)
 			{
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
 				case ExileCore.Shared.Enums.EntityType.TownPortal:
-					defaultTransition = true;
+					//defaultTransition = true;
 
 					if (_areaTransitions.ContainsKey(entity.Id))
 						_areaTransitions.Remove(entity.Id);
 					break;
 			}
 
+			/*
 			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
 				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if (!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Remove(entity.Id);
-			}
+			}*/
 
 			base.EntityRemoved(entity);
 		}
@@ -783,9 +800,9 @@ namespace SimpleFllw
 			return result;
 		}
 
-		private Vector2 WorldToValidScreenPosition(Vector3 worldPos, float zOffset)
+		private Vector2 WorldToValidScreenPosition(Vector3 worldPos, Vector3 offset)
 		{
-			var correctedPos = new Vector3(worldPos.X, worldPos.Y, worldPos.Z + zOffset);
+			var correctedPos = new Vector3(worldPos.X + offset.X, worldPos.Y + offset.Y, worldPos.Z + offset.Z);
 
 			return WorldToValidScreenPosition(correctedPos);
 		}
