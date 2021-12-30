@@ -537,7 +537,7 @@ namespace SimpleFllw
 										// vertical transition
 										else
 										{
-											offset.Z = -(currentTask.Size.Z / 2 - 10);
+											offset.Z = -(currentTask.Size.Z - 10);
 										}
 									}
 
