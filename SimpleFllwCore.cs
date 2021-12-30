@@ -408,7 +408,8 @@ namespace SimpleFllw
 					switch (currentTask.Type)
 					{
 						case TaskNodeType.Movement:
-							if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
+							//if (GameController.Area.CurrentArea.Area.RawName.Equals("HeistHubEndless"))
+							if (GameController.Area.CurrentArea.Area.IsTown)
 							{
 								Input.KeyUp(Settings.MovementKey);
 								return null;
