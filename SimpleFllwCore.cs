@@ -538,6 +538,7 @@ namespace SimpleFllw
 										else
 										{
 											offset.Z = -(currentTask.Size.Z - 10);
+											LogMessage($"offset z: {offset.Z}");
 										}
 									}
 
