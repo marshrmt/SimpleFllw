@@ -531,14 +531,13 @@ namespace SimpleFllw
 										// horizontal transition
 										if (currentTask.Size.Z < 5)
 										{
-											offset.X = (currentTask.Size.X / 2 - 10);
-											offset.Y = (currentTask.Size.Y / 2 - 10);
+											offset.X = (currentTask.Size.X - 10);
+											offset.Y = (currentTask.Size.Y - 10);
 										}
 										// vertical transition
 										else
 										{
-											offset.Z = -(currentTask.Size.Z * 2);
-											//LogMessage($"offset z: {offset.Z}");
+											offset.Z = -(currentTask.Size.Z * 2 - 10);
 										}
 									}
 
