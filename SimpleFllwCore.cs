@@ -268,7 +268,7 @@ namespace SimpleFllw
 					{
 						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
 						{
-							_pathfindingDistance = (int) ((float) _pathfindingDistance * 3);
+							_pathfindingDistance = (int) ((float) _pathfindingDistance * 2);
 							break;
 						}
 					}
@@ -532,8 +532,33 @@ namespace SimpleFllw
 										// horizontal transition
 										if (currentTask.Size.Z < 5)
 										{
-											offset.X = (currentTask.Size.X - 10);
-											offset.Y = (currentTask.Size.Y - 10);
+											switch (Settings.SlotNumber)
+											{
+												case 0:
+													offset.X = (currentTask.Size.X - 10);
+													offset.Y = (currentTask.Size.Y - 10);
+													break;
+
+												case 1:
+													offset.X = (currentTask.Size.X + 10);
+													offset.Y = (currentTask.Size.Y - 10);
+													break;
+
+												case 2:
+													offset.X = (currentTask.Size.X - 10);
+													offset.Y = (currentTask.Size.Y + 10);
+													break;
+
+												case 3:
+													offset.X = (currentTask.Size.X + 10);
+													offset.Y = (currentTask.Size.Y + 10);
+													break;
+
+												default:
+													offset.X = (currentTask.Size.X - 10);
+													offset.Y = (currentTask.Size.Y - 10);
+													break;
+											}
 										}
 										// vertical transition
 										else
