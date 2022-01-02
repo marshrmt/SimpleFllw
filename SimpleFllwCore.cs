@@ -97,7 +97,7 @@ namespace SimpleFllw
 
 			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.Portal, out ConcurrentBag<Entity> portals))
 			{
-				ResetTransitionsHelper(portals);
+				ResetTransitionsHelper(portals, true);
 			}
 
 			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.TownPortal, out ConcurrentBag<Entity> townPortals))
@@ -111,11 +111,11 @@ namespace SimpleFllw
 			}
 		}
 
-		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
+		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions, bool portals = false)
 		{
 			foreach (var transition in transitions)
 			{
-				if (!_areaTransitions.ContainsKey(transition.Id))
+				if (!_areaTransitions.ContainsKey(transition.Id) && !transition.Metadata.Contains("MultiplexPortal"))
 					_areaTransitions.Add(transition.Id, transition);
 			}
 		}
