@@ -109,6 +109,11 @@ namespace SimpleFllw
 			{
 				ResetTransitionHeistHelper(ingameIcons);
 			}
+
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.MiscellaneousObjects, out ConcurrentBag<Entity> misc))
+			{
+				ResetTransitionHarvestHelper(misc);
+			}
 		}
 
 		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions, bool portals = false)
@@ -132,6 +137,20 @@ namespace SimpleFllw
 					_areaTransitions.Add(transition.Id, transition);
 				}
 					
+			}
+		}
+
+		private void ResetTransitionHarvestHelper(ConcurrentBag<Entity> transitions)
+		{
+			foreach (var transition in transitions)
+			{
+				if (!_areaTransitions.ContainsKey(transition.Id) && transition.IsTargetable)
+				{
+					if (transition.Metadata == "Metadata/Terrain/Leagues/Harvest/Objects/HarvestPortalToggleableReverse"
+						|| transition.Metadata == "Metadata/Terrain/Leagues/Harvest/Objects/HarvestPortalToggleableReverseReturn")
+						_areaTransitions.Add(transition.Id, transition);
+				}
+
 			}
 		}
 
