@@ -280,14 +280,21 @@ namespace SimpleFllw
 					}
 				}
 
-				foreach (var _t in _areaTransitions)
+				if (GameController.Area.CurrentArea.IsHideout)
 				{
-					if (_t.Value?.Pos != null && GameController?.Player?.Pos != null)
+					_pathfindingDistance = (int)((float)_pathfindingDistance * 4);
+				}
+				else
+				{
+					foreach (var _t in _areaTransitions)
 					{
-						if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
+						if (_t.Value?.Pos != null && GameController?.Player?.Pos != null)
 						{
-							_pathfindingDistance = (int) ((float) _pathfindingDistance * 2);
-							break;
+							if (Vector3.Distance(_t.Value.Pos, GameController.Player.Pos) <= _dt)
+							{
+								_pathfindingDistance = (int)((float)_pathfindingDistance * 2);
+								break;
+							}
 						}
 					}
 				}
