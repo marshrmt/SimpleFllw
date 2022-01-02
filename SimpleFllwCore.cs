@@ -105,10 +105,10 @@ namespace SimpleFllw
 				ResetTransitionsHelper(townPortals);
 			}
 
-			/*if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
+			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
 			{
 				ResetTransitionHeistHelper(ingameIcons);
-			}*/
+			}
 		}
 
 		private void ResetTransitionsHelper(ConcurrentBag<Entity> transitions)
@@ -713,7 +713,7 @@ namespace SimpleFllw
 		}
 		public override void EntityAdded(Entity entity)
 		{
-			//bool defaultTransition = false;
+			bool defaultTransition = false;
 
 			if (!string.IsNullOrEmpty(entity.RenderName))
 			{
@@ -727,46 +727,46 @@ namespace SimpleFllw
 					case ExileCore.Shared.Enums.EntityType.AreaTransition:
 					case ExileCore.Shared.Enums.EntityType.Portal:
 					case ExileCore.Shared.Enums.EntityType.TownPortal:
-						//defaultTransition = true;
+						defaultTransition = true;
 						if (!_areaTransitions.ContainsKey(entity.Id))
 							_areaTransitions.Add(entity.Id, entity);
 						break;
 				}
 			}
 
-			/*if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
+			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
 				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if(!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Add(entity.Id, entity);
-			}*/
+			}
 
 			base.EntityAdded(entity);
 		}
 
 		public override void EntityRemoved(Entity entity)
 		{
-			//bool defaultTransition = false;
+			bool defaultTransition = false;
 
 			switch (entity.Type)
 			{
 				case ExileCore.Shared.Enums.EntityType.AreaTransition:
 				case ExileCore.Shared.Enums.EntityType.Portal:
 				case ExileCore.Shared.Enums.EntityType.TownPortal:
-					//defaultTransition = true;
+					defaultTransition = true;
 
 					if (_areaTransitions.ContainsKey(entity.Id))
 						_areaTransitions.Remove(entity.Id);
 					break;
 			}
 
-			/*
+			
 			if (!defaultTransition && (entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionEntryPortal"
 				|| entity.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal"))
 			{
 				if (!_areaTransitions.ContainsKey(entity.Id))
 					_areaTransitions.Remove(entity.Id);
-			}*/
+			}
 
 			base.EntityRemoved(entity);
 		}
