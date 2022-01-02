@@ -241,7 +241,7 @@ namespace SimpleFllw
 							if (tr.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
 							{
 								
-								_tasks.Add(new TaskNode(tr.Pos, _pathfindingDistance, TaskNodeType.Transition, new Vector3(bounds.X, bounds.Y, 125)));
+								_tasks.Add(new TaskNode(tr.Pos, _pathfindingDistance, TaskNodeType.Transition, new Vector3(bounds.X, bounds.Y, 140)));
 							}
 							else 
 							{ 
@@ -265,7 +265,7 @@ namespace SimpleFllw
 								if (tr.Metadata == "Metadata/Terrain/Leagues/Heist/Objects/MissionExitPortal")
 								{
 
-									_tasks.Add(new TaskNode(tr.Pos, 200, TaskNodeType.Transition, new Vector3(bounds.X, bounds.Y, 125)));
+									_tasks.Add(new TaskNode(tr.Pos, 200, TaskNodeType.Transition, new Vector3(bounds.X, bounds.Y, 140)));
 								}
 								else
 								{
