@@ -115,7 +115,7 @@ namespace SimpleFllw
 		{
 			foreach (var transition in transitions)
 			{
-				if (!_areaTransitions.ContainsKey(transition.Id) && !transition.Metadata.Contains("MultiplexPortal"))
+				if (!_areaTransitions.ContainsKey(transition.Id) && !transition.Metadata.Contains("Objects/MapPortal"))
 					_areaTransitions.Add(transition.Id, transition);
 			}
 		}
