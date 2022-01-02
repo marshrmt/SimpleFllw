@@ -594,7 +594,7 @@ namespace SimpleFllw
 
 									var screenPos = WorldToValidScreenPosition(currentTask.WorldPosition, offset);
 
-									if (screenPos.Y < 55) screenPos.Y = 55;
+									if (screenPos.Y < 60) screenPos.Y = 60;
 									
 									Input.KeyUp(Settings.MovementKey);
 
