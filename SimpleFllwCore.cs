@@ -102,7 +102,7 @@ namespace SimpleFllw
 
 			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.TownPortal, out ConcurrentBag<Entity> townPortals))
 			{
-				ResetTransitionsHelper(townPortals);
+				ResetTransitionsHelper(townPortals, true);
 			}
 
 			if (GameController.EntityListWrapper.ValidEntitiesByType.TryGetValue(ExileCore.Shared.Enums.EntityType.IngameIcon, out ConcurrentBag<Entity> ingameIcons))
