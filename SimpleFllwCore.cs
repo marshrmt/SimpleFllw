@@ -573,6 +573,7 @@ namespace SimpleFllw
 
 									if (currentTask.ContainsSize)
 									{
+										LogMessage($"z size: {currentTask.Size.Z}");
 										// horizontal transition
 										if (currentTask.Size.Z < 5)
 										{
