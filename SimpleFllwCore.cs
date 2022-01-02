@@ -565,18 +565,18 @@ namespace SimpleFllw
 													break;
 
 												case 1:
-													offset.X = (currentTask.Size.X + 10);
+													offset.X = -(currentTask.Size.X - 10);
 													offset.Y = (currentTask.Size.Y - 10);
 													break;
 
 												case 2:
 													offset.X = (currentTask.Size.X - 10);
-													offset.Y = (currentTask.Size.Y + 10);
+													offset.Y = -(currentTask.Size.Y - 10);
 													break;
 
 												case 3:
-													offset.X = (currentTask.Size.X + 10);
-													offset.Y = (currentTask.Size.Y + 10);
+													offset.X = -(currentTask.Size.X - 10);
+													offset.Y = -(currentTask.Size.Y - 10);
 													break;
 
 												default:
