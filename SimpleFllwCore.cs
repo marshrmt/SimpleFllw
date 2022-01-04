@@ -330,7 +330,7 @@ namespace SimpleFllw
 
 				if (transitionInProgress && _followTarget != null)
 				{
-					if (Vector3.Distance(GameController.Player.Pos, _followTarget.Pos) < Settings.ClearPathDistance.Value)
+					if (Vector3.Distance(GameController.Player.Pos, _followTarget.Pos) < 500)
 					{
 						for (var i = _tasks.Count - 1; i >= 0; i--)
 							if (_tasks[i].Type == TaskNodeType.Movement || _tasks[i].Type == TaskNodeType.Transition)
@@ -630,10 +630,10 @@ namespace SimpleFllw
 											
 											var fix = 15;
 
-											if (GameController.Area.CurrentArea.Name.Equals("Fields"))
-											{
-												fix = 90;
-											}
+											//if (GameController.Area.CurrentArea.Name.Equals("Fields"))
+											//{
+											//	fix = 90;
+											//}
 
 											offset.Z = -(currentTask.Size.Z * 2 - fix);
 										}
