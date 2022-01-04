@@ -330,7 +330,7 @@ namespace SimpleFllw
 
 				if (transitionInProgress && _followTarget != null)
 				{
-					if (Vector3.Distance(GameController.Player.Pos, _followTarget.Pos) < 250)
+					if (Vector3.Distance(GameController.Player.Pos, _followTarget.Pos) < Settings.ClearPathDistance.Value)
 					{
 						for (var i = _tasks.Count - 1; i >= 0; i--)
 							if (_tasks[i].Type == TaskNodeType.Movement || _tasks[i].Type == TaskNodeType.Transition)
