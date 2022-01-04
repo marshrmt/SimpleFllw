@@ -318,9 +318,16 @@ namespace SimpleFllw
 					}
 				}
 
+				var transitionInProgress = false;
+
+				if (_tasks.Count > 0 && _tasks.First().Type == TaskNodeType.Transition)
+				{
+					transitionInProgress = true;
+				}
+
 				//Cache the current follow target (if present)
 				_followTarget = GetFollowingTarget();
-				if (_followTarget != null)
+				if (_followTarget != null && !transitionInProgress)
 				{
 					var distanceFromFollower = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
 					//We are NOT within clear path distance range of leader. Logic can continue
