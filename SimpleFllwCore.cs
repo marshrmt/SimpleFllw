@@ -633,6 +633,8 @@ namespace SimpleFllw
 										Input.KeyUp(Settings.PhaseRunKey);
 									}
 
+									Input.KeyUp(Settings.MovementKey);
+
 									//Click the transition
 									Mouse.SetCursorPosAndLeftClickHuman(screenPos, 100);
 									//
