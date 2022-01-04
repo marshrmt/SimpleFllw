@@ -632,7 +632,7 @@ namespace SimpleFllw
 
 											if (GameController.Area.CurrentArea.Name.Equals("Fields"))
 											{
-												fix = 90;
+												fix = 140;
 											}
 
 											offset.Z = -(currentTask.Size.Z * 2 - fix);
