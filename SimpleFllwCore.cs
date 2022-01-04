@@ -571,8 +571,6 @@ namespace SimpleFllw
 
 									var offset = new Vector3(0, 0, 0);
 
-									LogMessage($"transition, area name: {GameController.Area.CurrentArea.Name}, z: {currentTask.Size.Z * 2}");
-
 									if (currentTask.ContainsSize)
 									{
 										// horizontal transition
@@ -614,7 +612,7 @@ namespace SimpleFllw
 
 											if (GameController.Area.CurrentArea.Name.Equals("Fields"))
 											{
-												fix = 60;
+												fix = 90;
 											}
 
 											offset.Z = -(currentTask.Size.Z * 2 - fix);
