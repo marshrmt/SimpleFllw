@@ -327,6 +327,19 @@ namespace SimpleFllw
 
 				//Cache the current follow target (if present)
 				_followTarget = GetFollowingTarget();
+
+				if (transitionInProgress && _followTarget != null)
+				{
+					if (Vector3.Distance(GameController.Player.Pos, _followTarget.Pos) < 250)
+					{
+						for (var i = _tasks.Count - 1; i >= 0; i--)
+							if (_tasks[i].Type == TaskNodeType.Movement || _tasks[i].Type == TaskNodeType.Transition)
+								_tasks.RemoveAt(i);
+						return null;
+					}
+				}
+
+				
 				if (_followTarget != null && !transitionInProgress)
 				{
 					var distanceFromFollower = Vector3.Distance(GameController.Player.Pos, _followTarget.Pos);
