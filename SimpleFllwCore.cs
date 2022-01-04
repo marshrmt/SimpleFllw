@@ -630,10 +630,10 @@ namespace SimpleFllw
 											
 											var fix = 15;
 
-											//if (GameController.Area.CurrentArea.Name.Equals("Fields"))
-											//{
-											//	fix = 90;
-											//}
+											if (GameController.Area.CurrentArea.Name.Equals("Fields"))
+											{
+												fix = 90;
+											}
 
 											offset.Z = -(currentTask.Size.Z * 2 - fix);
 										}
